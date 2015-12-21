@@ -1,4 +1,4 @@
-package tu.sofia.bookings.services;
+package tu.sofia.bookings.integration.services;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

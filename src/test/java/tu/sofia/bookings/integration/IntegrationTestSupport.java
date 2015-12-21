@@ -19,7 +19,7 @@ import retrofit.http.Headers;
 @SuppressWarnings("javadoc")
 public abstract class IntegrationTestSupport {
 
-	public static final String ENDPOINT = "http://localhost:" + System.getProperty("local.server.http.port") + "/backend/";
+	public static final String ENDPOINT = "http://localhost:" + System.getProperty("local.server.http.port") + "/bookings/";
 	public static final String ENDPOINT_API = ENDPOINT + "api/v1";
 
 	private static final StringBuilder cookies = new StringBuilder();
