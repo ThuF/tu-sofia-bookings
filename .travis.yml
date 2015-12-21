@@ -1,3 +1,2 @@
 language: java
-install: mvn install -f pom.xml -DskipTests=true
-script: mvn test -f pom.xml
+script: mvn clean install -P tests
