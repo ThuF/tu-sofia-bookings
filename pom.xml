@@ -343,7 +343,7 @@
 
 		<!-- integration tests properties -->
 		<maven.resource.plugin.version>2.7</maven.resource.plugin.version>
-		<cloudsdk.version>2.14.8.1</cloudsdk.version>
+		<cloudsdk.version>2.39.14.2</cloudsdk.version>
 		<sap.cloud.sdk.path>${project.build.directory}/sdk</sap.cloud.sdk.path>
 		<local.server.http.port>8888</local.server.http.port>
 		<local.server.ajp.port>8889</local.server.ajp.port>
