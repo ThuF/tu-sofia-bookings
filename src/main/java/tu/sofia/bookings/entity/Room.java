@@ -31,6 +31,7 @@ public class Room implements Serializable {
 	@Column(nullable = false)
 	private BedType bedType;
 
+	@Column(length = 1024)
 	private String description;
 
 	/**
@@ -120,7 +121,7 @@ public class Room implements Serializable {
 
 	/**
 	 * Sets the description
-	 * 
+	 *
 	 * @param description
 	 *            the description
 	 */
