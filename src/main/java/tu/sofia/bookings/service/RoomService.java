@@ -28,7 +28,7 @@ import tu.sofia.bookings.validation.ValidationErrorResponseBuilder;
  * Service for registering users
  */
 @Singleton
-@Path("/rooms")
+@Path("/entities/rooms")
 public class RoomService {
 
 	private UnitOfWorkUtils unitOfWorkUtils;

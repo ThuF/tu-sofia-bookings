@@ -28,7 +28,7 @@ import tu.sofia.bookings.entity.User;
  * Service for registering users
  */
 @Singleton
-@Path("/users")
+@Path("/entities/users")
 public class UserService {
 
 	private UnitOfWorkUtils unitOfWorkUtils;

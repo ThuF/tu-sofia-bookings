@@ -36,7 +36,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Secured Area</web-resource-name>
-			<url-pattern>/api/v1/*</url-pattern>
+			<url-pattern>/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>Everyone</role-name>
@@ -47,7 +47,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Admin Protected Area</web-resource-name>
-			<url-pattern>/api/v1/users</url-pattern>
+			<url-pattern>/api/v1/entities/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>Admin</role-name>
