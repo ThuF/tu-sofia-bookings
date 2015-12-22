@@ -1,4 +1,4 @@
-package tu.sofia.bookings.validation;
+package tu.sofia.bookings.validation.interfaces;
 
 import tu.sofia.bookings.entity.Room;
 

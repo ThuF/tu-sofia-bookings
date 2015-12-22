@@ -3,6 +3,7 @@ package tu.sofia.bookings.validation;
 import com.google.inject.Singleton;
 
 import tu.sofia.bookings.entity.Room;
+import tu.sofia.bookings.validation.interfaces.IRoomValidator;
 
 /**
  * Class for validating {@link Room}

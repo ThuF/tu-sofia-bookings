@@ -1,4 +1,4 @@
-package tu.sofia.bookings.validation;
+package tu.sofia.bookings.validation.interfaces;
 
 /**
  * Interface for performing validations

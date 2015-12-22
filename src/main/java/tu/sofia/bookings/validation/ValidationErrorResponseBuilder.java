@@ -3,6 +3,8 @@ package tu.sofia.bookings.validation;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import tu.sofia.bookings.validation.interfaces.IValidator;
+
 /**
  * Builds validation error response
  */

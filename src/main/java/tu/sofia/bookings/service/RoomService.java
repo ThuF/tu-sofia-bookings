@@ -23,6 +23,7 @@ import tu.sofia.bookings.dao.RoomDao;
 import tu.sofia.bookings.entity.Room;
 import tu.sofia.bookings.validation.RoomValidator;
 import tu.sofia.bookings.validation.ValidationErrorResponseBuilder;
+import tu.sofia.bookings.validation.interfaces.IRoomValidator;
 
 /**
  * Service for registering users
@@ -33,7 +34,7 @@ public class RoomService {
 
 	private UnitOfWorkUtils unitOfWorkUtils;
 	private RoomDao roomDao;
-	private RoomValidator roomValidator;
+	private IRoomValidator roomValidator;
 
 	/**
 	 * Constructor
