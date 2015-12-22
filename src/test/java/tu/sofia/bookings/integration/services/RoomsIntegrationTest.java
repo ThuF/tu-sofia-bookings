@@ -3,18 +3,17 @@ package tu.sofia.bookings.integration.services;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Response.Status;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import retrofit.RetrofitError;
 import retrofit.client.Response;
 import tu.sofia.bookings.api.RoomsAPI;
 import tu.sofia.bookings.entity.BedType;
@@ -23,6 +22,7 @@ import tu.sofia.bookings.entity.RoomType;
 import tu.sofia.bookings.entity.RoomView;
 import tu.sofia.bookings.integration.IntegrationTestSupport;
 import tu.sofia.bookings.integration.UserRole;
+import tu.sofia.bookings.validation.ApplicationExceptionMessage;
 
 @SuppressWarnings("javadoc")
 public class RoomsIntegrationTest extends IntegrationTestSupport {
@@ -85,6 +85,53 @@ public class RoomsIntegrationTest extends IntegrationTestSupport {
 	}
 
 	@Test
+	public void testAddInvalidEntityShouldReturnBadRequest() throws Exception {
+		try {
+			API.add(new Room());
+		} catch (RetrofitError e) {
+			Response response = e.getResponse();
+			assertResponseStatus(Status.BAD_REQUEST, response);
+			ApplicationExceptionMessage message = getApplicationExceptionMessage(e);
+			assertNotNull(message);
+			assertEquals(Status.BAD_REQUEST.getStatusCode(), message.getStatus());
+			assertEquals("The [roomType] property can't be null", message.getMessage());
+		}
+	}
+
+	@Test
+	public void testAddInvalidEntity2ShouldReturnBadRequest() throws Exception {
+		try {
+			Room room = new Room();
+			room.setRoomType(RoomType.DELUXE);
+			API.add(room);
+		} catch (RetrofitError e) {
+			Response response = e.getResponse();
+			assertResponseStatus(Status.BAD_REQUEST, response);
+			ApplicationExceptionMessage message = getApplicationExceptionMessage(e);
+			assertNotNull(message);
+			assertEquals(Status.BAD_REQUEST.getStatusCode(), message.getStatus());
+			assertEquals("The [roomView] property can't be null", message.getMessage());
+		}
+	}
+
+	@Test
+	public void testAddInvalidEntity3ShouldReturnBadRequest() throws Exception {
+		try {
+			Room room = new Room();
+			room.setRoomType(RoomType.DELUXE);
+			room.setRoomView(RoomView.OCEAN_VIEW);
+			API.add(room);
+		} catch (RetrofitError e) {
+			Response response = e.getResponse();
+			assertResponseStatus(Status.BAD_REQUEST, response);
+			ApplicationExceptionMessage message = getApplicationExceptionMessage(e);
+			assertNotNull(message);
+			assertEquals(Status.BAD_REQUEST.getStatusCode(), message.getStatus());
+			assertEquals("The [bedType] property can't be null", message.getMessage());
+		}
+	}
+
+	@Test
 	public void testUpdateEntity() throws Exception {
 		Response response = API.add(testData.get(0));
 		assertResponseStatus(Status.CREATED, response);
@@ -138,12 +185,6 @@ public class RoomsIntegrationTest extends IntegrationTestSupport {
 
 		assertEquals(new Long(2), API.count());
 	}
-
-	private long getResponseAsLong(Response response) throws IOException {
-		return Long.parseLong(IOUtils.toString(response.getBody().in()));
-	}
-
-	// TODO Add tests for trying to add entity with null columns!
 
 	private void assertRoomEquals(Room expected, Room actual) {
 		assertNotNull(actual);

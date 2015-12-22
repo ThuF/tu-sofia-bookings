@@ -3,9 +3,14 @@ package tu.sofia.bookings.integration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.core.Response.Status;
+
+import org.apache.commons.io.IOUtils;
+
+import com.google.gson.Gson;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -15,9 +20,12 @@ import retrofit.client.Header;
 import retrofit.client.Response;
 import retrofit.http.GET;
 import retrofit.http.Headers;
+import tu.sofia.bookings.validation.ApplicationExceptionMessage;
 
 @SuppressWarnings("javadoc")
 public abstract class IntegrationTestSupport {
+
+	private static final Gson GSON = new Gson();
 
 	public static final String ENDPOINT = "http://localhost:" + System.getProperty("local.server.http.port") + "/bookings/";
 	public static final String ENDPOINT_API = ENDPOINT + "api/v1";
@@ -46,6 +54,15 @@ public abstract class IntegrationTestSupport {
 
 	protected void logout() {
 		cookies.delete(0, cookies.length());
+	}
+
+	protected ApplicationExceptionMessage getApplicationExceptionMessage(RetrofitError e) throws IOException {
+		String json = IOUtils.toString(e.getResponse().getBody().in());
+		return GSON.fromJson(json, ApplicationExceptionMessage.class);
+	}
+
+	protected long getResponseAsLong(Response response) throws IOException {
+		return Long.parseLong(IOUtils.toString(response.getBody().in()));
 	}
 
 	protected void assertResponseStatus(Status expectedStatus, Response response) {
