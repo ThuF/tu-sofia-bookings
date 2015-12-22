@@ -20,7 +20,7 @@ import tu.sofia.bookings.integration.IntegrationTestSupport;
 import tu.sofia.bookings.integration.UserRole;
 
 @SuppressWarnings("javadoc")
-public class UserIntegrationTest extends IntegrationTestSupport {
+public class UsersIntegrationTest extends IntegrationTestSupport {
 
 	private static final List<User> testData = new ArrayList<User>();
 	private UsersAPI API;
@@ -103,9 +103,7 @@ public class UserIntegrationTest extends IntegrationTestSupport {
 
 		User result = API.get(testData.get(0).getUserId());
 
-		assertNotNull(result);
-		assertEquals(testData.get(0).getUserId(), result.getUserId());
-		assertEquals(testData.get(0).getFirstName(), result.getFirstName());
+		assertUserEquals(testData.get(0), result);
 		assertEquals(new Long(1), API.count());
 	}
 
@@ -119,12 +117,17 @@ public class UserIntegrationTest extends IntegrationTestSupport {
 
 		List<User> results = API.get();
 		assertNotNull(results);
-
 		assertEquals(2, results.size());
-		assertEquals(testData.get(0).getUserId(), results.get(0).getUserId());
-		assertEquals(testData.get(0).getFirstName(), results.get(0).getFirstName());
-		assertEquals(testData.get(1).getUserId(), results.get(1).getUserId());
-		assertEquals(testData.get(1).getFirstName(), results.get(1).getFirstName());
+		for (int i = 0; i < results.size(); i++) {
+			assertUserEquals(testData.get(i), results.get(i));
+		}
+
 		assertEquals(new Long(2), API.count());
+	}
+
+	private void assertUserEquals(User expected, User actual) {
+		assertNotNull(expected);
+		assertEquals(expected.getUserId(), actual.getUserId());
+		assertEquals(expected.getFirstName(), actual.getFirstName());
 	}
 }

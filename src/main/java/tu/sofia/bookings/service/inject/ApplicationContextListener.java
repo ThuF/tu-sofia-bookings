@@ -15,6 +15,7 @@ import com.google.inject.persist.PersistService;
 import com.google.inject.servlet.GuiceServletContextListener;
 
 import tu.sofia.bookings.service.GsonMessageBodyHandler;
+import tu.sofia.bookings.service.RoomService;
 import tu.sofia.bookings.service.UserService;
 
 /**
@@ -65,6 +66,7 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 	private void addServices() {
 		getSingletons().add(new GsonMessageBodyHandler<Object>());
 		getSingletons().add(injector.getInstance(UserService.class));
+		getSingletons().add(injector.getInstance(RoomService.class));
 	}
 
 	/**
