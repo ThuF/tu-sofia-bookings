@@ -33,21 +33,21 @@ import tu.sofia.bookings.validation.interfaces.IRoomValidator;
 public class RoomService {
 
 	private UnitOfWorkUtils unitOfWorkUtils;
-	private RoomDao roomDao;
 	private IRoomValidator roomValidator;
+	private RoomDao roomDao;
 
 	/**
 	 * Constructor
 	 *
 	 * @param unitOfWorkUtils
-	 * @param roomDao
 	 * @param roomValidator
+	 * @param roomDao
 	 */
 	@Inject
-	public RoomService(UnitOfWorkUtils unitOfWorkUtils, RoomDao roomDao, RoomValidator roomValidator) {
+	public RoomService(UnitOfWorkUtils unitOfWorkUtils, RoomValidator roomValidator, RoomDao roomDao) {
 		this.unitOfWorkUtils = unitOfWorkUtils;
-		this.roomDao = roomDao;
 		this.roomValidator = roomValidator;
+		this.roomDao = roomDao;
 	}
 
 	/**
