@@ -21,6 +21,8 @@ import com.google.inject.Singleton;
 import tu.sofia.bookings.common.UnitOfWorkUtils;
 import tu.sofia.bookings.dao.RoomDao;
 import tu.sofia.bookings.entity.Room;
+import tu.sofia.bookings.validation.RoomValidator;
+import tu.sofia.bookings.validation.ValidationErrorResponseBuilder;
 
 /**
  * Service for registering users
@@ -31,17 +33,20 @@ public class RoomService {
 
 	private UnitOfWorkUtils unitOfWorkUtils;
 	private RoomDao roomDao;
+	private RoomValidator roomValidator;
 
 	/**
 	 * Constructor
 	 *
 	 * @param unitOfWorkUtils
 	 * @param roomDao
+	 * @param roomValidator
 	 */
 	@Inject
-	public RoomService(UnitOfWorkUtils unitOfWorkUtils, RoomDao roomDao) {
+	public RoomService(UnitOfWorkUtils unitOfWorkUtils, RoomDao roomDao, RoomValidator roomValidator) {
 		this.unitOfWorkUtils = unitOfWorkUtils;
 		this.roomDao = roomDao;
+		this.roomValidator = roomValidator;
 	}
 
 	/**
@@ -108,13 +113,18 @@ public class RoomService {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addRoom(Room room) {
-		// TODO Add checks for not null collumns
 		unitOfWorkUtils.begin();
 
-		roomDao.create(room);
+		Response response = null;
+		if (roomValidator.isValid(room)) {
+			roomDao.create(room);
+			response = Response.status(Status.CREATED).entity(room.getRoomId()).build();
+		} else {
+			response = ValidationErrorResponseBuilder.toResponse(roomValidator);
+		}
 
 		unitOfWorkUtils.end();
-		return Response.status(Status.CREATED).entity(room.getRoomId()).build();
+		return response;
 	}
 
 	/**
@@ -129,17 +139,20 @@ public class RoomService {
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateRoom(@PathParam("id") Long id, Room room) {
-		// TODO add checks for not null columns
 		unitOfWorkUtils.begin();
 
 		Response response = null;
-		Room persistedRoom = roomDao.findById(id);
-		if (persistedRoom != null) {
-			updateRoomProperties(persistedRoom, room);
-			roomDao.update(persistedRoom);
-			response = Response.noContent().build();
+		if (roomValidator.isValid(room)) {
+			Room persistedRoom = roomDao.findById(id);
+			if (persistedRoom != null) {
+				updateRoomProperties(persistedRoom, room);
+				roomDao.update(persistedRoom);
+				response = Response.status(Status.NO_CONTENT).build();
+			} else {
+				response = Response.status(Status.NOT_FOUND).build();
+			}
 		} else {
-			response = Response.status(Status.NOT_FOUND).build();
+			response = ValidationErrorResponseBuilder.toResponse(roomValidator);
 		}
 
 		unitOfWorkUtils.end();
