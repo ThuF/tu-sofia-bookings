@@ -9,6 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import tu.sofia.bookings.entity.additional.BedType;
+import tu.sofia.bookings.entity.additional.RoomType;
+import tu.sofia.bookings.entity.additional.RoomView;
+
 /**
  * Entity class representing the T_ROOM database table
  */

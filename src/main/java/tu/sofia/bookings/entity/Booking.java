@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import tu.sofia.bookings.entity.additional.BookingStatus;
+import tu.sofia.bookings.entity.additional.PaymentStatus;
+
 /**
  * Entity class representing the T_BOOKING database table
  */

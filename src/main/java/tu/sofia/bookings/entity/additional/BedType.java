@@ -1,4 +1,4 @@
-package tu.sofia.bookings.entity;
+package tu.sofia.bookings.entity.additional;
 
 /**
  * Enumeration of all types of beds
