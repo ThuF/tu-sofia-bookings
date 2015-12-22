@@ -8,6 +8,7 @@
 
 		<class>tu.sofia.bookings.entity.User</class>
 		<class>tu.sofia.bookings.entity.Room</class>
+		<class>tu.sofia.bookings.entity.Booking</class>
 
 		<shared-cache-mode>NONE</shared-cache-mode>
 		<properties>
