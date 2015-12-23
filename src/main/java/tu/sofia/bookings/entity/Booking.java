@@ -10,7 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,7 +25,33 @@ import tu.sofia.bookings.entity.additional.PaymentStatus;
  */
 @Entity
 @Table(name = "T_BOOKING")
+@NamedQueries({ @NamedQuery(name = Booking.QUERY_NAME_FIND_BY_ID_AND_USER, query = Booking.QUERY_FIND_BY_ID_AND_USER),
+		@NamedQuery(name = Booking.QUERY_NAME_FIND_ALL_BY_USER, query = Booking.QUERY_FIND_ALL_BY_USER) })
 public class Booking implements Serializable {
+
+	/**
+	 * The name of a query for finding a booking by booking id and user
+	 */
+	public static final String QUERY_NAME_FIND_BY_ID_AND_USER = "findByIdAndUser";
+
+	/**
+	 * The name of a query for finding all bookings for user
+	 */
+	public static final String QUERY_NAME_FIND_ALL_BY_USER = "findAllByUser";
+
+	/**
+	 * The bookingId parameter
+	 */
+	public static final String PARAM_BOOKING_ID = "bookingId";
+
+	/**
+	 * The user paramatere
+	 */
+	public static final String PARAM_USER = "user";
+
+	static final String QUERY_FIND_BY_ID_AND_USER = "select b from Booking b where b.bookingId = :" + PARAM_BOOKING_ID + " and b.user = :"
+			+ PARAM_USER;
+	static final String QUERY_FIND_ALL_BY_USER = "select b from Booking b where b.user = :" + PARAM_USER;
 
 	private static final long serialVersionUID = 4930072322837450442L;
 
@@ -51,11 +79,10 @@ public class Booking implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date paymentDate;
 
-	@OneToMany
-	private List<User> users;
+	@OneToOne
+	private User user;
 
-	@OneToMany
-	private List<Room> rooms;
+	private List<Long> roomsId;
 
 	/**
 	 * Returns the booking id
@@ -191,47 +218,44 @@ public class Booking implements Serializable {
 	}
 
 	/**
-	 * Returns the users for the booking
-	 * 
-	 * @return the users for the booking
+	 * Returns the user for the booking
+	 *
+	 * @return the user for the booking
 	 */
-	public List<User> getUsers() {
-		if (users == null) {
-			users = new ArrayList<User>();
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * Sets the user for the booking
+	 *
+	 * @param user
+	 *            the user for the booking
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	/**
+	 * Returns the rooms id for the booking
+	 *
+	 * @return the rooms id for the booking
+	 */
+	public List<Long> getRoomsId() {
+		if (roomsId == null) {
+			roomsId = new ArrayList<Long>();
 		}
-		return users;
+		return roomsId;
 	}
 
 	/**
-	 * Sets the users for the booking
-	 * 
-	 * @param users
-	 *            the users for the booking
+	 * Sets the rooms id for the booking
+	 *
+	 * @param roomsId
+	 *            the rooms id for the booking
 	 */
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
-
-	/**
-	 * Returns the rooms for the booking
-	 * 
-	 * @return the rooms for the booking
-	 */
-	public List<Room> getRooms() {
-		if (rooms == null) {
-			rooms = new ArrayList<Room>();
-		}
-		return rooms;
-	}
-
-	/**
-	 * Sets the rooms for the booking
-	 * 
-	 * @param rooms
-	 *            the rooms for the booking
-	 */
-	public void setRooms(List<Room> rooms) {
-		this.rooms = rooms;
+	public void setRoomsId(List<Long> roomsId) {
+		this.roomsId = roomsId;
 	}
 
 }
