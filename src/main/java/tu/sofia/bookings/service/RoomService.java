@@ -183,7 +183,7 @@ public class RoomService {
 		Room room = roomDao.findById(id);
 		if (room != null) {
 			roomDao.delete(room);
-			response = Response.noContent().build();
+			response = Response.status(Status.NO_CONTENT).build();
 		} else {
 			response = Response.status(Status.NOT_FOUND).build();
 		}

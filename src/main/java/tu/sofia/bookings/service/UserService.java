@@ -143,7 +143,7 @@ public class UserService {
 		if (persistedUser != null) {
 			updateUserProperties(persistedUser, user);
 			userDao.update(persistedUser);
-			response = Response.noContent().build();
+			response = Response.status(Status.NO_CONTENT).build();
 		} else {
 			response = Response.status(Status.NOT_FOUND).build();
 		}
@@ -174,7 +174,7 @@ public class UserService {
 		User user = userDao.findById(id);
 		if (user != null) {
 			userDao.delete(user);
-			response = Response.noContent().build();
+			response = Response.status(Status.NO_CONTENT).build();
 		} else {
 			response = Response.status(Status.NOT_FOUND).build();
 		}
