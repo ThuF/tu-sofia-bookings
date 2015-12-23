@@ -19,6 +19,7 @@ import tu.sofia.bookings.service.BookingService;
 import tu.sofia.bookings.service.GeneralExceptionHandler;
 import tu.sofia.bookings.service.GsonMessageBodyHandler;
 import tu.sofia.bookings.service.RoomService;
+import tu.sofia.bookings.service.UserBookingService;
 import tu.sofia.bookings.service.UserService;
 
 /**
@@ -73,6 +74,7 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 		getSingletons().add(injector.getInstance(RoomService.class));
 		getSingletons().add(injector.getInstance(BookService.class));
 		getSingletons().add(injector.getInstance(BookingService.class));
+		getSingletons().add(injector.getInstance(UserBookingService.class));
 	}
 
 	/**

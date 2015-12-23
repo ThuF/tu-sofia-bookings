@@ -32,7 +32,8 @@ public class BookingDao extends AbstractJpaDao<Long, Booking> {
 		TypedQuery<Booking> query = getEntityManager().createNamedQuery(Booking.QUERY_NAME_FIND_BY_ID_AND_USER, Booking.class);
 		query.setParameter(Booking.PARAM_BOOKING_ID, id);
 		query.setParameter(Booking.PARAM_USER, user);
-		return query.getSingleResult();
+		List<Booking> resultList = query.getResultList();
+		return resultList.isEmpty() ? null : resultList.get(0);
 	}
 
 	/**
