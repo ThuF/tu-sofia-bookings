@@ -14,10 +14,10 @@ import com.google.inject.Singleton;
 import tu.sofia.bookings.entity.Room;
 
 /**
- * Service for registering users
+ * Proxy service for rooms
  */
 @Singleton
-@Path("/rooms")
+@Path("/public/rooms")
 public class RoomServiceProxy {
 
 	private RoomService roomService;

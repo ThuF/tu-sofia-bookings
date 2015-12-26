@@ -9,7 +9,7 @@ import tu.sofia.bookings.entity.Booking;
 @SuppressWarnings("javadoc")
 public interface BookAPI {
 
-	@POST("/book")
+	@POST("/protected/user/book")
 	@Headers("Accept: application/json")
 	Response add(@Body final Booking body);
 }

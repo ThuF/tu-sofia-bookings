@@ -29,7 +29,7 @@ import tu.sofia.bookings.validation.interfaces.IRoomValidator;
  * Service for registering users
  */
 @Singleton
-@Path("/entities/rooms")
+@Path("/protected/admin/rooms")
 public class RoomService {
 
 	private UnitOfWorkUtils unitOfWorkUtils;

@@ -14,7 +14,7 @@ bookignsApp.controller('BookingsController', function($scope, $http) {
 	loadRooms();
 
 	function loadRooms() {
-		$http.get('../../api/v1/rooms').success(function(data){
+		$http.get('../../api/v1/public/rooms').success(function(data){
 			$scope.rooms = data;
 			updatePageProperties(0);
 		});

@@ -27,7 +27,7 @@ import tu.sofia.bookings.entity.User;
  * Service for creating bookings
  */
 @Singleton
-@Path("/user/bookings")
+@Path("/protected/user/bookings")
 public class UserBookingService {
 
 	private static final String VALIDATION_MESSAGE_THE_USER_ID_PROPERTY_CAN_T_BE_EXTRACTED_FROM_THE_REQUEST = "The [userId] property can't be extracted from the request";

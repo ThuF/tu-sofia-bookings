@@ -31,7 +31,7 @@ import tu.sofia.bookings.validation.interfaces.IRoomPriceValidator;
  * Service for payment
  */
 @Singleton
-@Path("/payment")
+@Path("/protected/admin/payment")
 public class PaymentService {
 
 	private static final String VALIDATION_MESSAGE_NO_ROOM_PRICE_FOUND_WITH_ROOM_ID = "No room price found with [roomId={0}]";

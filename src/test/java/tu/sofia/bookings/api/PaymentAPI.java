@@ -15,23 +15,23 @@ import tu.sofia.bookings.entity.RoomPrice;
 @SuppressWarnings("javadoc")
 public interface PaymentAPI {
 
-	@GET("/payment/rooms")
+	@GET("/protected/admin/payment/rooms")
 	@Headers("Accept: application/json")
 	List<RoomPrice> get();
 
-	@GET("/payment/rooms/{id}/price")
+	@GET("/protected/admin/payment/rooms/{id}/price")
 	Double getPrice(@Path("id") final Long id);
 
-	@GET("/payment/rooms/count")
+	@GET("/protected/admin/payment/rooms/count")
 	Long count();
 
-	@POST("/payment/rooms")
+	@POST("/protected/admin/payment/rooms")
 	@Headers("Accept: application/json")
 	Response add(@Body final RoomPrice body);
 
-	@PUT("/payment/rooms/{id}/price")
+	@PUT("/protected/admin/payment/rooms/{id}/price")
 	Response updatePrice(@Path("id") final Long id, @Body final Double body);
 
-	@DELETE("/payment/rooms/{id}")
+	@DELETE("/protected/admin/payment/rooms/{id}")
 	Response remove(@Path("id") final Long id);
 }

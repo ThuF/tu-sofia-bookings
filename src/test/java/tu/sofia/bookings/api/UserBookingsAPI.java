@@ -10,11 +10,11 @@ import tu.sofia.bookings.entity.Booking;
 @SuppressWarnings("javadoc")
 public interface UserBookingsAPI {
 
-	@GET("/user/bookings")
+	@GET("/protected/user/bookings")
 	@Headers("Accept: application/json")
 	List<Booking> get();
 
-	@GET("/user/bookings/{id}")
+	@GET("/protected/user/bookings/{id}")
 	@Headers("Accept: application/json")
 	Booking get(@Path("id") final Long id);
 }

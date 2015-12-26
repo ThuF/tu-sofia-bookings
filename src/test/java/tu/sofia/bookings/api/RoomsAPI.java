@@ -15,26 +15,26 @@ import tu.sofia.bookings.entity.Room;
 @SuppressWarnings("javadoc")
 public interface RoomsAPI {
 
-	@GET("/entities/rooms")
+	@GET("/protected/admin/rooms")
 	@Headers("Accept: application/json")
 	List<Room> get();
 
-	@GET("/entities/rooms/{id}")
+	@GET("/protected/admin/rooms/{id}")
 	@Headers("Accept: application/json")
 	Room get(@Path("id") final Long id);
 
-	@GET("/entities/rooms/count")
+	@GET("/protected/admin/rooms/count")
 	Long count();
 
-	@POST("/entities/rooms")
+	@POST("/protected/admin/rooms")
 	@Headers("Accept: application/json")
 	Response add(@Body final Room body);
 
-	@PUT("/entities/rooms/{id}")
+	@PUT("/protected/admin/rooms/{id}")
 	@Headers("Accept: application/json")
 	Response update(@Path("id") final Long id, @Body final Room body);
 
-	@DELETE("/entities/rooms/{id}")
+	@DELETE("/protected/admin/rooms/{id}")
 	@Headers("Accept: application/json")
 	Response remove(@Path("id") final Long id);
 }

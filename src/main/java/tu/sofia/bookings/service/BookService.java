@@ -27,7 +27,7 @@ import tu.sofia.bookings.validation.interfaces.IBookingValidator;
  * Service for creating bookings
  */
 @Singleton
-@Path("/book")
+@Path("/protected/user/book")
 public class BookService {
 
 	private static final String VALIDATION_MESSAGE_NO_USER_REGISTERED_WITH_USER_ID = "No user registered with userId [{0}]";

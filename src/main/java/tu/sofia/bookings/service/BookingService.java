@@ -27,7 +27,7 @@ import tu.sofia.bookings.entity.additional.PaymentStatus;
  * Service for creating bookings
  */
 @Singleton
-@Path("/entities/bookings")
+@Path("/protected/admin/bookings")
 public class BookingService {
 
 	private UnitOfWorkUtils unitOfWorkUtils;

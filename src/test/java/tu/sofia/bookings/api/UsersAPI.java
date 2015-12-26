@@ -15,26 +15,26 @@ import tu.sofia.bookings.entity.User;
 @SuppressWarnings("javadoc")
 public interface UsersAPI {
 
-	@GET("/entities/users")
+	@GET("/protected/admin/users")
 	@Headers("Accept: application/json")
 	List<User> get();
 
-	@GET("/entities/users/{id}")
+	@GET("/protected/admin/users/{id}")
 	@Headers("Accept: application/json")
 	User get(@Path("id") final String id);
 
-	@GET("/entities/users/count")
+	@GET("/protected/admin/users/count")
 	Long count();
 
-	@POST("/entities/users")
+	@POST("/protected/admin/users")
 	@Headers("Accept: application/json")
 	Response add(@Body final User body);
 
-	@PUT("/entities/users/{id}")
+	@PUT("/protected/admin/users/{id}")
 	@Headers("Accept: application/json")
 	Response update(@Path("id") final String id, @Body final User body);
 
-	@DELETE("/entities/users/{id}")
+	@DELETE("/protected/admin/users/{id}")
 	@Headers("Accept: application/json")
 	Response remove(@Path("id") final String id);
 }
