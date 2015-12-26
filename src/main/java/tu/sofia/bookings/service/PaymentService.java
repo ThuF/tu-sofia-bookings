@@ -82,7 +82,7 @@ public class PaymentService {
 	 */
 	@GET
 	@Path("/rooms/{id}/price")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public Double getRoomPrice(@PathParam("id") Long id) {
 		unitOfWorkUtils.begin();
 
@@ -126,6 +126,7 @@ public class PaymentService {
 		unitOfWorkUtils.begin();
 
 		Response response = null;
+		// TODO pass the roomPriceDao to check for entites with the same Id Do the same for Bookings, rooms and etc!
 		if (roomPriceValidator.isValid(roomPrice, roomDao)) {
 			roomPriceDao.create(roomPrice);
 			response = Response.status(Status.CREATED).entity(roomPrice.getRoomId()).build();

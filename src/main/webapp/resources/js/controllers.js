@@ -27,7 +27,9 @@ bookignsApp.controller('BookingsController', function($scope, $http) {
 	}
 
 	function loadSelectedRoomPrice(roomId) {
-		$scope.selectedRoomPrice = 101;
+		$http.get('../../api/v1/public/payment/rooms/' + roomId + "/price").success(function(data){
+			$scope.selectedRoomPrice = data;
+		});
 	}
 
 	function loadSelectedRoomReviews(roomId) {
