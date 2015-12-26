@@ -27,8 +27,9 @@ public abstract class IntegrationTestSupport {
 
 	private static final Gson GSON = new Gson();
 
-	public static final String ENDPOINT = "http://localhost:" + System.getProperty("local.server.http.port") + "/bookings/";
-	public static final String ENDPOINT_API = ENDPOINT + "api/v1";
+	private static final String ENDPOINT = "http://localhost:" + System.getProperty("local.server.http.port") + "/bookings/";
+	private static final String ENDPOINT_API = ENDPOINT + "api/v1";
+	private static final String ENDPOINT_LOGIN = ENDPOINT_API + "/protected";
 
 	private static final StringBuilder cookies = new StringBuilder();
 	private static final LogLevel logLevel = RestAdapter.LogLevel.NONE;
@@ -39,7 +40,7 @@ public abstract class IntegrationTestSupport {
 	}
 
 	protected void login(UserRole userRole) {
-		RestAdapter logingRestAdapter = new RestAdapter.Builder().setEndpoint(ENDPOINT_API).setLogLevel(logLevel).build();
+		RestAdapter logingRestAdapter = new RestAdapter.Builder().setEndpoint(ENDPOINT_LOGIN).setLogLevel(logLevel).build();
 		Response response = null;
 		switch (userRole) {
 			case EVERYONE:
