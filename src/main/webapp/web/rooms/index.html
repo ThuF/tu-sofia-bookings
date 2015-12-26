@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bookings">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Rooms Booking - Gran Hotel Bali</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../resources/css/shop-item.css" rel="stylesheet">
+
+	<!-- Custom CSS -->
+    <link href="../../resources/css/custom.css" rel="stylesheet">
+
+	<!-- Datepicker CSS -->
+    <link href="../../resources/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/controllers.js"></script>
+</head>
+
+<body ng-controller="BookingsController">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Gran Hotel Bali</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <p class="lead">Booking Period</p>
+                <div id="booking-daterange" class="input-daterange">
+                	<div class="row">
+                		<div class="col-md-3 text-right">From:</div>
+                		<div class="col-md-9"><input id="datepicker-from" type="text" class="input-small" name="start" /></div>
+                	</div>
+                	<div class="row">
+                		<div class="col-md-3 text-right">To:</div>
+                		<div class="col-md-9"><input id="datepicker-to" type="text" class="input-small" name="start" /></div>
+                	</div>
+                </div>
+                <a id="search-button" class="btn btn-success">Search</a>
+				<hr>
+                <p class="lead">Available Rooms</p>
+                <div class="list-group">
+                    <a href="#" ng-class="(room == selectedRoom) ? 'active list-group-item' : 'list-group-item'" ng-repeat="room in rooms" ng-click="setSelectedRoom($index)")>{{$index + 1}} | {{room.roomType}}</a>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+
+                <div class="thumbnail">
+                	<div id="roomImagesCarousel" class="carousel slide" data-ride="carousel">
+					  <!-- Indicators -->
+						<ol class="carousel-indicators">
+							<li ng-repeat="image in selectedRoom.images" data-target="#roomImagesCarousel" data-slide-to="{{$index}}" ng-class="($index === 0) ? 'active' : ''"></li>
+					  	</ol>
+					
+					  <!-- Wrapper for slides -->
+					  	<div class="carousel-inner" role="listbox">
+					    	<div ng-repeat="image in selectedRoom.images" ng-class="($index === 0) ? 'item active' : 'item'">
+					      		<img ng-src="{{image}}" alt="Room">
+					    	</div>
+					  	</div>
+					
+					  <!-- Left and right controls -->
+						<a class="left carousel-control" href="#roomImagesCarousel" role="button" data-slide="prev">
+					  		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					    	<span class="sr-only">Previous</span>
+						</a>
+					  	<a class="right carousel-control" href="#roomImagesCarousel" role="button" data-slide="next">
+					    	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					    	<span class="sr-only">Next</span>
+					  	</a>
+					</div>
+
+                    <img class="img-responsive" ng-src="{{selectedRoom.image}}" alt="">
+                    <div class="caption-full">
+                        <h4 class="pull-right">${{selectedRoomPrice}}</h4>
+                        <h4><a href="#">Description</a>
+                        </h4>
+                        <div class="text-right">
+    	                    <a class="btn btn-primary">Book</a>
+	                    </div>
+                        <p>{{selectedRoom.description}}</p>
+                    </div>
+                    <div class="ratings">
+                        <p class="pull-right">3 reviews</p>
+                        <p>
+                            <span ng-repeat="star in selectedRoomRating track by $index" ng-class="star === true ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'"></span>
+                            {{selectedRoom.rating}} stars
+                        </p>
+                    </div>
+                </div>
+
+                <div class="well">
+                    <div class="text-right">
+                        <a class="btn btn-success">Leave a Review</a>
+                    </div>
+
+					<div ng-repeat="review in selectedRoomReviews">
+	                    <hr>
+	                    <div class="row">
+	                        <div class="col-md-12">
+	                            <span ng-repeat="star in review.rating track by $index" ng-class="star === true ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'"></span>
+	                            {{review.username}}
+	                            <span class="pull-right">{{review.daysBefore}} {{review.daysBefore > 1 ? 'days' : 'day'}} ago</span>
+	                            <p>{{review.comment}}</p>
+	                        </div>
+	                    </div>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <hr>
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2014</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- jQuery -->
+    <script src="../../resources/js/jquery.min.js"></script>
+
+	<!-- Datepicker -->
+    <script src="../../resources/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../resources/js/bootstrap.min.js"></script>
+
+	 <script type="text/javascript">
+	 	$('#booking-daterange').datepicker({
+		    autoclose: true,
+	 		calendarWeeks: true,
+		    todayHighlight: true,
+		    todayBtn: true,
+		    startDate: new Date()
+		});
+
+	 	$('#datepicker-from').datepicker().on('changeDate', function(e) {
+	 		$('#datepicker-to').datepicker('show');
+	 	});
+	 </script>
+</body>
+</html>
