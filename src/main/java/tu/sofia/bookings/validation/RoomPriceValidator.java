@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import com.google.inject.Singleton;
 
 import tu.sofia.bookings.dao.RoomDao;
+import tu.sofia.bookings.dao.RoomPriceDao;
 import tu.sofia.bookings.entity.RoomPrice;
 import tu.sofia.bookings.validation.interfaces.IRoomPriceValidator;
 
@@ -18,6 +19,7 @@ public class RoomPriceValidator implements IRoomPriceValidator {
 	private static final String VALIDATION_MESSAGE_THE_ROOM_ID_PROPERTY_CAN_T_BE_NULL = "The [roomId] property can't be null";
 	private static final String VALIDATION_MESSAGE_THE_PRICE_PROPERTY_CAN_T_BE_NULL = "The [price] property can't be null";
 	private static final String VALIDATION_MESSAGE_THERE_IS_NO_ROOM_WITH_ROOM_ID = "There is no room with [roomId={0}]";
+	private static final String VALIDATION_MESSAGE_THERE_IS_ALREADY_A_PRICE_FOR_THIS_ROOM = "There is already a price for this room";
 
 	private String validationMessage;
 
@@ -27,7 +29,7 @@ public class RoomPriceValidator implements IRoomPriceValidator {
 	}
 
 	@Override
-	public boolean isValid(RoomPrice roomPrice, RoomDao roomDao) {
+	public boolean isValid(RoomPrice roomPrice, RoomDao roomDao, RoomPriceDao roomPriceDao) {
 		boolean isValid = false;
 		if (roomPrice == null) {
 			validationMessage = VALIDATION_MESSAGE_THE_ROOM_PRICE_CAN_T_BE_NULL;
@@ -37,10 +39,11 @@ public class RoomPriceValidator implements IRoomPriceValidator {
 			validationMessage = VALIDATION_MESSAGE_THE_PRICE_PROPERTY_CAN_T_BE_NULL;
 		} else if (roomDao.findById(roomPrice.getRoomId()) == null) {
 			validationMessage = MessageFormat.format(VALIDATION_MESSAGE_THERE_IS_NO_ROOM_WITH_ROOM_ID, roomPrice.getRoomId());
+		} else if (roomPriceDao.findById(roomPrice.getRoomId()) != null) {
+			validationMessage = VALIDATION_MESSAGE_THERE_IS_ALREADY_A_PRICE_FOR_THIS_ROOM;
 		} else {
 			isValid = true;
 		}
 		return isValid;
 	}
-
 }

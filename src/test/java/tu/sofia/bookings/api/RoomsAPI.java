@@ -23,6 +23,10 @@ public interface RoomsAPI {
 	@Headers("Accept: application/json")
 	Room get(@Path("id") final Long id);
 
+	@GET("/protected/admin/rooms/startdate/{startDate}/enddate/{endDate}")
+	@Headers("Accept: application/json")
+	List<Room> getAvailableRooms(@Path("startDate") final Long startDate, @Path("endDate") final Long endDate);
+
 	@GET("/protected/admin/rooms/count")
 	Long count();
 

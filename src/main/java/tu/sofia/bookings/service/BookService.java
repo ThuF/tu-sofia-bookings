@@ -37,6 +37,7 @@ public class BookService {
 	private IBookingValidator bookingValidator;
 	private BookingDao bookingDao;
 	private UserDao userDao;
+	private PaymentService paymentService;
 
 	/**
 	 * Constructor
@@ -45,13 +46,16 @@ public class BookService {
 	 * @param bookingValidator
 	 * @param bookingDao
 	 * @param userDao
+	 * @param paymentService
 	 */
 	@Inject
-	public BookService(UnitOfWorkUtils unitOfWorkUtils, BookValidator bookingValidator, BookingDao bookingDao, UserDao userDao) {
+	public BookService(UnitOfWorkUtils unitOfWorkUtils, BookValidator bookingValidator, BookingDao bookingDao, UserDao userDao,
+			PaymentService paymentService) {
 		this.unitOfWorkUtils = unitOfWorkUtils;
 		this.bookingValidator = bookingValidator;
 		this.bookingDao = bookingDao;
 		this.userDao = userDao;
+		this.paymentService = paymentService;
 	}
 
 	/**
@@ -74,11 +78,7 @@ public class BookService {
 				User user = userDao.findById(userId);
 				if (user != null) {
 					booking.setUser(user);
-
-					// TODO Call the Payment service to set the payment
-					// TODO Remove me!!!
-					booking.setPaymentAmount(0D);
-
+					booking.setPaymentAmount(paymentService.getRoomPrice(booking.getRoomId()));
 					bookingDao.create(booking);
 					response = Response.status(Status.CREATED).entity(booking.getBookingId()).build();
 				} else {

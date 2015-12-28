@@ -1,5 +1,6 @@
 package tu.sofia.bookings.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -34,6 +35,20 @@ public class BookingDao extends AbstractJpaDao<Long, Booking> {
 		query.setParameter(Booking.PARAM_USER, user);
 		List<Booking> resultList = query.getResultList();
 		return resultList.isEmpty() ? null : resultList.get(0);
+	}
+
+	/**
+	 * Finds all bookings in the selected booking period
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * @return all bookings in the selected booking period
+	 */
+	public List<Booking> findByBookingPeriod(Date startDate, Date endDate) {
+		TypedQuery<Booking> query = getEntityManager().createNamedQuery(Booking.QUERY_NAME_FIND_BY_BOOKING_PERIOD, Booking.class);
+		query.setParameter(Booking.PARAM_START_DATE, startDate);
+		query.setParameter(Booking.PARAM_END_DATE, endDate);
+		return query.getResultList();
 	}
 
 	/**

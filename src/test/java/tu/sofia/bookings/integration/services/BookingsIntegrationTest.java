@@ -28,15 +28,22 @@ public class BookingsIntegrationTest extends AbstractBookingsIntegrationTest {
 		Booking data1 = new Booking();
 		data1.setStartDate(new Date());
 		data1.setEndDate(new Date());
-		data1.getRoomsId().add(1L);
+		data1.setRoomId(1L);
 
 		Booking data2 = new Booking();
 		data2.setStartDate(new Date());
 		data2.setEndDate(new Date());
-		data2.getRoomsId().add(2L);
+		data2.setRoomId(2L);
 
 		testData.add(data1);
 		testData.add(data2);
+	}
+
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+		testData.get(0).setRoomId(getPersistedRoom().getRoomId());
+		testData.get(1).setRoomId(getPersistedRoom().getRoomId());
 	}
 
 	@Override

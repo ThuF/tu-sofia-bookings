@@ -37,7 +37,7 @@ public class UserBookingsIntegrationTest extends AbstractBookingsIntegrationTest
 
 	@Test
 	public void testAddBookingAndListAll() throws Exception {
-		Response response = API_BOOK.add(createBooking(new Date(), new Date(), 1L));
+		Response response = API_BOOK.add(createBooking(new Date(), new Date(), getPersistedRoom().getRoomId()));
 		assertResponseStatus(Status.CREATED, response);
 
 		List<Booking> results = API.get();
@@ -47,7 +47,7 @@ public class UserBookingsIntegrationTest extends AbstractBookingsIntegrationTest
 
 	@Test
 	public void testAddBookingAndListAllFromDifferentUsers() throws Exception {
-		Response response = API_BOOK.add(createBooking(new Date(), new Date(), 1L));
+		Response response = API_BOOK.add(createBooking(new Date(), new Date(), getPersistedRoom().getRoomId()));
 		assertResponseStatus(Status.CREATED, response);
 
 		logout();
@@ -62,7 +62,7 @@ public class UserBookingsIntegrationTest extends AbstractBookingsIntegrationTest
 
 	@Test
 	public void testAddBookingAndFindByIdAndUser() throws Exception {
-		Booking expectedBooking = createBooking(new Date(), new Date(), 1L);
+		Booking expectedBooking = createBooking(new Date(), new Date(), getPersistedRoom().getRoomId());
 		Response response = API_BOOK.add(expectedBooking);
 		assertResponseStatus(Status.CREATED, response);
 
@@ -72,7 +72,7 @@ public class UserBookingsIntegrationTest extends AbstractBookingsIntegrationTest
 
 	@Test
 	public void testAddBookingAndFindByIdAndUserFromDifferentUser() throws Exception {
-		Response response = API_BOOK.add(createBooking(new Date(), new Date(), 1L));
+		Response response = API_BOOK.add(createBooking(new Date(), new Date(), getPersistedRoom().getRoomId()));
 		assertResponseStatus(Status.CREATED, response);
 
 		long bookingId = getResponseAsLong(response);

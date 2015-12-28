@@ -1,9 +1,7 @@
 package tu.sofia.bookings.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,6 +24,7 @@ import tu.sofia.bookings.entity.additional.PaymentStatus;
 @Entity
 @Table(name = "T_BOOKING")
 @NamedQueries({ @NamedQuery(name = Booking.QUERY_NAME_FIND_BY_ID_AND_USER, query = Booking.QUERY_FIND_BY_ID_AND_USER),
+		@NamedQuery(name = Booking.QUERY_NAME_FIND_BY_BOOKING_PERIOD, query = Booking.QUERY_FIND_BY_BOOKING_PERIOD),
 		@NamedQuery(name = Booking.QUERY_NAME_FIND_ALL_BY_USER, query = Booking.QUERY_FIND_ALL_BY_USER) })
 public class Booking implements Serializable {
 
@@ -33,6 +32,11 @@ public class Booking implements Serializable {
 	 * The name of a query for finding a booking by booking id and user
 	 */
 	public static final String QUERY_NAME_FIND_BY_ID_AND_USER = "findByIdAndUser";
+
+	/**
+	 * The name of a query for finding a bookings by booking period
+	 */
+	public static final String QUERY_NAME_FIND_BY_BOOKING_PERIOD = "findByBookingPeriod";
 
 	/**
 	 * The name of a query for finding all bookings for user
@@ -45,12 +49,24 @@ public class Booking implements Serializable {
 	public static final String PARAM_BOOKING_ID = "bookingId";
 
 	/**
-	 * The user paramatere
+	 * The user parameter
 	 */
 	public static final String PARAM_USER = "user";
 
+	/**
+	 * The startDate parameter
+	 */
+	public static final String PARAM_START_DATE = "startDate";
+
+	/**
+	 * The endDate parameter
+	 */
+	public static final String PARAM_END_DATE = "endDate";
+
 	static final String QUERY_FIND_BY_ID_AND_USER = "select b from Booking b where b.bookingId = :" + PARAM_BOOKING_ID + " and b.user = :"
 			+ PARAM_USER;
+	static final String QUERY_FIND_BY_BOOKING_PERIOD = "select b from Booking b where b.startDate >= :" + PARAM_START_DATE + " and b.endDate <= :"
+			+ PARAM_END_DATE;
 	static final String QUERY_FIND_ALL_BY_USER = "select b from Booking b where b.user = :" + PARAM_USER;
 
 	private static final long serialVersionUID = 4930072322837450442L;
@@ -82,7 +98,7 @@ public class Booking implements Serializable {
 	@OneToOne
 	private User user;
 
-	private List<Long> roomsId;
+	private Long roomId;
 
 	/**
 	 * Returns the booking id
@@ -237,25 +253,22 @@ public class Booking implements Serializable {
 	}
 
 	/**
-	 * Returns the rooms id for the booking
+	 * Returns the room id for the booking
 	 *
-	 * @return the rooms id for the booking
+	 * @return the room id for the booking
 	 */
-	public List<Long> getRoomsId() {
-		if (roomsId == null) {
-			roomsId = new ArrayList<Long>();
-		}
-		return roomsId;
+	public Long getRoomId() {
+		return roomId;
 	}
 
 	/**
-	 * Sets the rooms id for the booking
+	 * Sets the room id for the booking
 	 *
-	 * @param roomsId
-	 *            the rooms id for the booking
+	 * @param roomId
+	 *            the room id for the booking
 	 */
-	public void setRoomsId(List<Long> roomsId) {
-		this.roomsId = roomsId;
+	public void setRoomId(Long roomId) {
+		this.roomId = roomId;
 	}
 
 }

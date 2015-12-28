@@ -41,7 +41,7 @@ public class BookValidator implements IBookingValidator {
 			validationMessage = VALIDATION_MESSAGE_THE_INITIAL_VALUE_OF_THE_BOOKING_STATUS_PROPERTY_CAN_T_BE_DIFFERENT_FROM_PROCESSING;
 		} else if (booking.getPaymentStatus() != PaymentStatus.UNPAID) {
 			validationMessage = VALIDATION_MESSAGE_THE_INITIAL_VALUE_OF_THE_PAYMENT_STATUS_PROPERTY_CAN_T_BE_DIFFERENT_FROM_UNPAID;
-		} else if (booking.getRoomsId().isEmpty()) {
+		} else if (booking.getRoomId() == null) {
 			validationMessage = VALIDATION_MESSAGE_NO_ROOMS_ARE_PROVIDED_FOR_THE_BOOKING;
 		} else if (booking.getUser() != null) {
 			validationMessage = VALIDATION_MESSAGE_THE_USER_PROPERTY_SHOULD_NOT_BE_PROVIDED_BY_THE_USER;

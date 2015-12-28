@@ -1,6 +1,9 @@
 package tu.sofia.bookings.service;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,7 +22,9 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import tu.sofia.bookings.common.UnitOfWorkUtils;
+import tu.sofia.bookings.dao.BookingDao;
 import tu.sofia.bookings.dao.RoomDao;
+import tu.sofia.bookings.entity.Booking;
 import tu.sofia.bookings.entity.Room;
 import tu.sofia.bookings.validation.RoomValidator;
 import tu.sofia.bookings.validation.ValidationErrorResponseBuilder;
@@ -35,6 +40,7 @@ public class RoomService {
 	private UnitOfWorkUtils unitOfWorkUtils;
 	private IRoomValidator roomValidator;
 	private RoomDao roomDao;
+	private BookingDao bookingDao;
 
 	/**
 	 * Constructor
@@ -42,12 +48,14 @@ public class RoomService {
 	 * @param unitOfWorkUtils
 	 * @param roomValidator
 	 * @param roomDao
+	 * @param bookingDao
 	 */
 	@Inject
-	public RoomService(UnitOfWorkUtils unitOfWorkUtils, RoomValidator roomValidator, RoomDao roomDao) {
+	public RoomService(UnitOfWorkUtils unitOfWorkUtils, RoomValidator roomValidator, RoomDao roomDao, BookingDao bookingDao) {
 		this.unitOfWorkUtils = unitOfWorkUtils;
 		this.roomValidator = roomValidator;
 		this.roomDao = roomDao;
+		this.bookingDao = bookingDao;
 	}
 
 	/**
@@ -61,6 +69,30 @@ public class RoomService {
 		unitOfWorkUtils.begin();
 
 		List<Room> rooms = roomDao.findAll();
+
+		unitOfWorkUtils.end();
+		return rooms;
+	}
+
+	/**
+	 * Returns a list of all available rooms in the selected period
+	 *
+	 * @param startDate
+	 * @param endDate
+	 * @return list of all available rooms in the selected period
+	 */
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/startdate/{startDate}/enddate/{endDate}")
+	public List<Room> getAvailableRooms(@PathParam("startDate") Long startDate, @PathParam("endDate") Long endDate) {
+		unitOfWorkUtils.begin();
+
+		List<Booking> bookings = bookingDao.findByBookingPeriod(new Date(startDate), new Date(endDate));
+		Set<Long> bookedRooms = new HashSet<Long>();
+		for (Booking next : bookings) {
+			bookedRooms.add(next.getRoomId());
+		}
+		List<Room> rooms = roomDao.findAllExcept(bookedRooms);
 
 		unitOfWorkUtils.end();
 		return rooms;

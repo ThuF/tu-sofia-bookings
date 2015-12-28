@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import tu.sofia.bookings.entity.additional.BedType;
@@ -18,7 +20,20 @@ import tu.sofia.bookings.entity.additional.RoomView;
  */
 @Entity
 @Table(name = "T_ROOM")
+@NamedQueries({ @NamedQuery(name = Room.QUERY_NAME_FIND_ALL_EXCEPT, query = Room.QUERY_FIND_ALL_EXCEPT) })
 public class Room implements Serializable {
+
+	/**
+	 * The name of a query for finding all rooms except the chosen one
+	 */
+	public static final String QUERY_NAME_FIND_ALL_EXCEPT = "findAllExcept";
+
+	/**
+	 * The roomIds parameter
+	 */
+	public static final String PARAM_ROOM_IDS = "roomIds";
+
+	static final String QUERY_FIND_ALL_EXCEPT = "select r from Room r where r.roomId not in :" + PARAM_ROOM_IDS;
 
 	private static final long serialVersionUID = 1370127930303639423L;
 

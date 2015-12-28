@@ -126,8 +126,7 @@ public class PaymentService {
 		unitOfWorkUtils.begin();
 
 		Response response = null;
-		// TODO pass the roomPriceDao to check for entites with the same Id Do the same for Bookings, rooms and etc!
-		if (roomPriceValidator.isValid(roomPrice, roomDao)) {
+		if (roomPriceValidator.isValid(roomPrice, roomDao, roomPriceDao)) {
 			roomPriceDao.create(roomPrice);
 			response = Response.status(Status.CREATED).entity(roomPrice.getRoomId()).build();
 		} else {
