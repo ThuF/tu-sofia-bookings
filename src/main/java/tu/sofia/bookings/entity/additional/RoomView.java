@@ -51,7 +51,7 @@ public enum RoomView {
 	POOL_VIEW,
 
 	/**
-	 * The garder room view
+	 * The garden room view
 	 */
 	GARDEN_VIEW
 }

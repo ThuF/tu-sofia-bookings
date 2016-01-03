@@ -1,14 +1,56 @@
-var bookignsApp = angular.module('bookings', []);
+var app = angular.module('bookings', []);
 
-bookignsApp.controller('BookingsController', function($scope, $http) {
+app.controller('BookingsController', function($scope, $http) {
+
+	$('#booking-daterange').datepicker({
+	    autoclose: true,
+ 		calendarWeeks: true,
+	    todayHighlight: true,
+	    todayBtn: true,
+	    startDate: new Date()
+	});
+
+ 	$('#datepicker-from').datepicker().on('changeDate', function(e) {
+ 		$('#datepicker-to').datepicker('show');
+ 		updateSearchEnabled();
+ 	});
+
+ 	$('#datepicker-to').datepicker().on('changeDate', function(e) {
+ 		updateSearchEnabled();
+ 	});
 
 	$scope.rooms = [];
 	$scope.selectedRoomPrice = null;
 	$scope.selectedRoomRating = null;
 	$scope.selectedRoomReviews = [];
+	$scope.isSearchEnabled = false;
 
 	$scope.setSelectedRoom = function(index) {
 		updatePageProperties(index);
+	}
+
+	$scope.getAvailableRooms = function() {
+		if($scope.isSearchEnabled) {
+			var startDate = getStartDate().getTime();
+			var endDate = getEndDate().getTime();
+			var url = '../../api/v1/public/rooms/available/startdate/' + startDate + '/enddate/' + endDate;
+			$http.get(url).success(function(data){
+				$scope.rooms = data;
+				updatePageProperties(0);
+			});
+		}
+	}
+
+	$scope.bookSelectedRoom = function() {
+		var data = {
+				'roomId': $scope.selectedRoom.roomId,
+				'startDate': getStartDate(),
+				'endDate': getEndDate()
+		};
+
+		$http.post('../../api/v1/protected/user/book', data).success(function(data) {
+			alert("Booking successfull!");
+		});
 	}
 
 	loadRooms();
@@ -58,5 +100,17 @@ bookignsApp.controller('BookingsController', function($scope, $http) {
 			ratingArray.push(i <= rating);
 		}
 		return ratingArray;
+	}
+
+	function getStartDate() {
+		return $('#datepicker-from').datepicker('getDate');
+	}
+
+	function getEndDate() {
+		return $('#datepicker-to').datepicker('getDate');
+	}
+
+	function updateSearchEnabled() {
+		$scope.isSearchEnabled = getStartDate() != null && getEndDate() != null;
 	}
 });

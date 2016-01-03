@@ -28,7 +28,8 @@
     <![endif]-->
     
     <script src="../../resources/js/angular.min.js"></script>
-    <script src="../../resources/js/controllers.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.17/angular-route.min.js"></script>
+    <script src="../../resources/js/controllers/bookings.js"></script>
 </head>
 
 <body ng-controller="BookingsController">
@@ -74,7 +75,7 @@
                 		<div class="col-md-9"><input id="datepicker-to" type="text" class="input-small" name="start" /></div>
                 	</div>
                 </div>
-                <a id="search-button" class="btn btn-success">Search</a>
+                <button id="search-button" class="btn btn-success" ng-click="getAvailableRooms()">Search</button>
 				<hr>
                 <p class="lead">Available Rooms</p>
                 <div class="list-group">
@@ -115,7 +116,7 @@
                         <h4><a href="#">Description</a>
                         </h4>
                         <div class="text-right">
-    	                    <a class="btn btn-primary">Book</a>
+    	                    <button class="btn btn-primary" ng-click="bookSelectedRoom()">Book</button>
 	                    </div>
                         <p>{{selectedRoom.description}}</p>
                     </div>
@@ -170,18 +171,5 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="../../resources/js/bootstrap.min.js"></script>
 
-	 <script type="text/javascript">
-	 	$('#booking-daterange').datepicker({
-		    autoclose: true,
-	 		calendarWeeks: true,
-		    todayHighlight: true,
-		    todayBtn: true,
-		    startDate: new Date()
-		});
-
-	 	$('#datepicker-from').datepicker().on('changeDate', function(e) {
-	 		$('#datepicker-to').datepicker('show');
-	 	});
-	 </script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package tu.sofia.bookings.dao;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 import org.slf4j.Logger;
@@ -39,15 +40,15 @@ public class BookingDao extends AbstractJpaDao<Long, Booking> {
 
 	/**
 	 * Finds all bookings in the selected booking period
-	 * 
+	 *
 	 * @param startDate
 	 * @param endDate
 	 * @return all bookings in the selected booking period
 	 */
 	public List<Booking> findByBookingPeriod(Date startDate, Date endDate) {
 		TypedQuery<Booking> query = getEntityManager().createNamedQuery(Booking.QUERY_NAME_FIND_BY_BOOKING_PERIOD, Booking.class);
-		query.setParameter(Booking.PARAM_START_DATE, startDate);
-		query.setParameter(Booking.PARAM_END_DATE, endDate);
+		query.setParameter(Booking.PARAM_START_DATE, startDate, TemporalType.DATE);
+		query.setParameter(Booking.PARAM_END_DATE, endDate, TemporalType.DATE);
 		return query.getResultList();
 	}
 

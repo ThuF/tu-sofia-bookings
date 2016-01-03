@@ -1,0 +1,93 @@
+[
+	{
+		"id": "roomId",
+		"name": "Room Id",
+		"readOnly": true
+	}, {
+		"id": "roomType",
+		"name": "Room Type",
+		"dropdown": [{
+			"label": "Standard",
+			"value": "STANDARD"
+		}, {
+			"label": "Moderate",
+			"value": "MODERATE"
+		}, {
+			"label": "Superior",
+			"value": "SUPERIOR"
+		}, {
+			"label": "Deluxe",
+			"value": "DELUXE"
+		}, {
+			"label": "Run of House",
+			"value": "RUN_OF_HOUSE"
+		}, {
+			"label": "Junior Suite",
+			"value": "JUNIOR_SUITE"
+		}, {
+			"label": "Suite",
+			"value": "SUITE"
+		}, {
+			"label": "Studio",
+			"value": "STUDIO"
+		}]
+	}, {
+		"id": "roomView",
+		"name": "Room View",
+		"dropdown": [{
+			"label": "Partial Ocean View",
+			"value": "PARTIAL_OCEAN_VIEW"
+		}, {
+			"label": "Ocean View",
+			"value": "OCEAN_VIEW"
+		}, {
+			"label": "Ocean Front",
+			"value": "OCEAN_FRONT"
+		}, {
+			"label": "Beach Front",
+			"value": "BEACH_FRONT"
+		}, {
+			"label": "City View",
+			"value": "CITY_VIEW"
+		}, {
+			"label": "Mountain View",
+			"value": "MOUNTAIN_VIEW"
+		}, {
+			"label": "Water View",
+			"value": "WATER_VIEW"
+		}, {
+			"label": "Island View",
+			"value": "ISLAND_VIEW"
+		}, {
+			"label": "Pool View",
+			"value": "POOL_VIEW"
+		}, {
+			"label": "Garden View",
+			"value": "GARDEN_VIEW"
+		}]
+	}, {
+		"id": "bedType",
+		"name": "Bed Type",
+		"dropdown": [{
+			"label": "King",
+			"value": "KING"
+		}, {
+			"label": "California King",
+			"value": "CALIFORNIA_KING"
+		}, {
+			"label": "Queen",
+			"value": "QUEEN"
+		}, {
+			"label": "Double",
+			"value": "DOUBLE"
+		}, {
+			"label": "Twin",
+			"value": "TWIN"
+		}]
+	}, {
+		"id": "description",
+		"name": "Description",
+		"optional": true,
+		"textarea": true
+	}
+]

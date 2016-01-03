@@ -55,4 +55,19 @@ public class RoomServiceProxy {
 	public Room getRoom(@PathParam("id") Long id) {
 		return roomService.getRoom(id);
 	}
+
+	/**
+	 * Returns a list of all available rooms in the selected period
+	 *
+	 * @param startDate
+	 * @param endDate
+	 * @return list of all available rooms in the selected period
+	 */
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/available/startdate/{startDate}/enddate/{endDate}")
+	public List<Room> getAvailableRooms(@PathParam("startDate") Long startDate, @PathParam("endDate") Long endDate) {
+		return roomService.getAvailableRooms(startDate, endDate);
+	}
+
 }

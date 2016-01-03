@@ -1,0 +1,54 @@
+[
+	{
+		"id": "bookingId",
+		"name": "Booking Id"
+	}, {
+		"id": "startDate",
+		"name": "Start Date"
+	}, {
+		"id": "endDate",
+		"name": "End Date"
+	}, {
+		"id": "roomId",
+		"name": "Room Id"
+	}, {
+		"id": "bookingStatus",
+		"name": "Booking Status",
+		"editableBookingStatus": true,
+		"dropdown": [{
+			"label": "Processing",
+			"value": "PROCESSING"
+		}, {
+			"label": "Confirmed",
+			"value": "CONFIRMED"
+		}, {
+			"label": "Rejected",
+			"value": "REJECTED"
+		}]
+	}, {
+		"id": "paymentStatus",
+		"name": "Payment Status",
+		"editablePaymentStatus": true,
+		"dropdown": [{
+			"label": "Unpaid",
+			"value": "UNPAID"
+		}, {
+			"label": "Partially Paid",
+			"value": "PARTIALLY_PAID"
+		}, {
+			"label": "Fully Paid",
+			"value": "FULLY_PAID"
+		}]
+	}, {
+		"id": "paymentAmount",
+		"name": "Payment Amount"
+	}, {
+		"id": "paymentDate",
+		"name": "Payment Date"
+	}, {
+		"id": "user",
+		"name": "User",
+		"nested": true,
+		"nestedId": "userId"
+	}
+]

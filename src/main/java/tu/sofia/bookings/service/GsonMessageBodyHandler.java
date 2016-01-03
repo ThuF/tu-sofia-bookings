@@ -18,6 +18,7 @@ import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
@@ -29,11 +30,17 @@ import com.google.gson.GsonBuilder;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class GsonMessageBodyHandler<T> implements MessageBodyWriter<T>, MessageBodyReader<T> {
-	private final GsonBuilder gsonBuilder = new GsonBuilder();
+	private final Gson gson = createGson();
 
 	@Override
 	public long getSize(final T t, final Class<?> type, final Type genericType, final Annotation[] annotations, final MediaType mediaType) {
 		return -1;
+	}
+
+	private Gson createGson() {
+		GsonBuilder builder = new GsonBuilder();
+		builder.setDateFormat("yyyy-MM-dd");
+		return builder.create();
 	}
 
 	@Override
@@ -58,7 +65,7 @@ public class GsonMessageBodyHandler<T> implements MessageBodyWriter<T>, MessageB
 			targetType = type;
 		}
 
-		return type.cast(gsonBuilder.create().fromJson(entityReader, targetType));
+		return type.cast(gson.fromJson(entityReader, targetType));
 	}
 
 	@Override
@@ -66,7 +73,7 @@ public class GsonMessageBodyHandler<T> implements MessageBodyWriter<T>, MessageB
 			final MultivaluedMap<String, Object> httpHeaders, final OutputStream entityStream) throws IOException, WebApplicationException {
 
 		if (!String.class.isAssignableFrom(type)) {
-			entityStream.write(gsonBuilder.create().toJson(t).getBytes("UTF-8"));
+			entityStream.write(gson.toJson(t).getBytes("UTF-8"));
 		} else {
 			entityStream.write(((String) t).getBytes("UTF-8"));
 		}
