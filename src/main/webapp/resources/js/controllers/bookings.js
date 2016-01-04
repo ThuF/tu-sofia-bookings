@@ -33,7 +33,7 @@ app.controller('BookingsController', function($scope, $http) {
 		if($scope.isSearchEnabled) {
 			var startDate = getStartDate().getTime();
 			var endDate = getEndDate().getTime();
-			var url = '../../api/v1/public/rooms/available/startdate/' + startDate + '/enddate/' + endDate;
+			var url = '../../../api/v1/public/rooms/available/startdate/' + startDate + '/enddate/' + endDate;
 			$http.get(url).success(function(data){
 				$scope.rooms = data;
 				updatePageProperties(0);
@@ -48,7 +48,7 @@ app.controller('BookingsController', function($scope, $http) {
 				'endDate': getEndDate()
 		};
 
-		$http.post('../../api/v1/protected/user/book', data).success(function(data) {
+		$http.post('../../../api/v1/protected/user/book', data).success(function(data) {
 			alert("Booking successfull!");
 		});
 	}
@@ -57,18 +57,18 @@ app.controller('BookingsController', function($scope, $http) {
 	getUser();
 
 	function loadRooms() {
-		$http.get('../../api/v1/public/rooms').success(function(data){
+		$http.get('../../../api/v1/public/rooms').success(function(data){
 			$scope.rooms = data;
 			updatePageProperties(0);
 		});
 	}
 
 	function getUser() {
-		$http.get('../../api/v1/public/user/profile').success(function(data){
+		$http.get('../../../api/v1/public/user/profile').success(function(data){
 			$scope.user = data;
 		}).error(function(data, status) {
 			if (status == 404) {
-				$http.post('../../api/v1/protected/user/register').success(function(data){
+				$http.post('../../../api/v1/protected/user/register').success(function(data){
 					getUser();
 				}).error(function(data, status) {
 					alert('Unable to register user');
@@ -84,7 +84,7 @@ app.controller('BookingsController', function($scope, $http) {
 	}
 
 	function loadSelectedRoomPrice(roomId) {
-		$http.get('../../api/v1/public/payment/rooms/' + roomId + "/price").success(function(data){
+		$http.get('../../../api/v1/public/payment/rooms/' + roomId + "/price").success(function(data){
 			$scope.selectedRoomPrice = data;
 		});
 	}

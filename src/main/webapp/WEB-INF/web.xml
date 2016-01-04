@@ -57,27 +57,24 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Protected Web</web-resource-name>
-			<url-pattern>/web/user/*</url-pattern>
+			<url-pattern>/web/protected/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>Everyone</role-name>
 			<role-name>Admin</role-name>
 		</auth-constraint>
 	</security-constraint>
-	<login-config>
-		<auth-method>FORM</auth-method>
-	</login-config>
 
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Protected Admin Web</web-resource-name>
-			<url-pattern>/web/admin/*</url-pattern>
+			<url-pattern>/web/protected/admin/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>Admin</role-name>
 		</auth-constraint>
 	</security-constraint>
-	
+
 	<session-config>
 		<session-timeout>5</session-timeout>
 	</session-config>

@@ -10,16 +10,16 @@
     <title>Rooms Booking - Gran Hotel Bali</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../../resources/css/shop-item.css" rel="stylesheet">
+    <link href="../../../resources/css/shop-item.css" rel="stylesheet">
 
 	<!-- Custom CSS -->
-    <link href="../../resources/css/custom.css" rel="stylesheet">
+    <link href="../../../resources/css/custom.css" rel="stylesheet">
 
 	<!-- Datepicker CSS -->
-    <link href="../../resources/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+    <link href="../../../resources/css/bootstrap-datepicker3.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -27,8 +27,17 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    <script src="../../resources/js/angular.min.js"></script>
-    <script src="../../resources/js/controllers/bookings.js"></script>
+    <script src="../../../resources/js/angular.min.js"></script>
+    <script src="../../../resources/js/controllers/bookings.js"></script>
+
+    <!-- jQuery -->
+    <script src="../../../resources/js/jquery.min.js"></script>
+
+	<!-- Datepicker -->
+    <script src="../../../resources/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../../resources/js/bootstrap.min.js"></script>
 </head>
 
 <body ng-controller="BookingsController">
@@ -49,7 +58,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../user" ng-hide="user">Login</a></li>
+                    <li><a href="../../protected/user" ng-hide="user">Login</a></li>
                     <li><a href="#" ng-show="user">Bookings</a></li>
                     <li><a href="#" ng-show="user">Profile</a></li>
                 </ul>
@@ -160,15 +169,5 @@
             </div>
         </footer>
     </div>
-
-    <!-- jQuery -->
-    <script src="../../resources/js/jquery.min.js"></script>
-
-	<!-- Datepicker -->
-    <script src="../../resources/js/bootstrap-datepicker.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../../resources/js/bootstrap.min.js"></script>
-
 </body>
 </html>

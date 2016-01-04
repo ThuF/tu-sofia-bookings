@@ -11,7 +11,7 @@ bookignsApp.config(function($routeProvider){
          redirectTo: '/bookings'
      });
 }).controller('RoomsAdminController', function($scope, $http) {
-	var API_ROOMS = '../../api/v1/protected/admin/rooms';
+	var API_ROOMS = '../../../api/v1/protected/admin/rooms';
 
 	$http.get('resources/model-room.json').success(function(data) {
 		$scope.model = data;
@@ -169,7 +169,7 @@ bookignsApp.config(function($routeProvider){
     });
 }).controller('BookingsAdminController', function($scope, $http){
 
-	var API_BOOKINGS = '../../api/v1/protected/admin/bookings';
+	var API_BOOKINGS = '../../../api/v1/protected/admin/bookings';
 
 	$http.get('resources/model-booking.json').success(function(data) {
 		$scope.model = data;
