@@ -54,11 +54,26 @@ app.controller('BookingsController', function($scope, $http) {
 	}
 
 	loadRooms();
+	getUser();
 
 	function loadRooms() {
 		$http.get('../../api/v1/public/rooms').success(function(data){
 			$scope.rooms = data;
 			updatePageProperties(0);
+		});
+	}
+
+	function getUser() {
+		$http.get('../../api/v1/public/user/profile').success(function(data){
+			$scope.user = data;
+		}).error(function(data, status) {
+			if (status == 404) {
+				$http.post('../../api/v1/protected/user/register').success(function(data){
+					getUser();
+				}).error(function(data, status) {
+					alert('Unable to register user');
+				});
+			}
 		});
 	}
 

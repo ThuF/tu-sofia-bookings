@@ -3,6 +3,7 @@ package tu.sofia.bookings.service;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -43,7 +44,11 @@ public class UserProfileServiceProxy {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getUserProfile(@Context HttpServletRequest request) {
-		return userService.getUser(request.getRemoteUser());
+		String userId = request.getRemoteUser();
+		if (userId == null) {
+			throw new NotAuthorizedException("There is no currently logged in user");
+		}
+		return userService.getUser(userId);
 	}
 
 	/**
