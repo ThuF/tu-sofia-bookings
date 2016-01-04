@@ -23,6 +23,8 @@ import tu.sofia.bookings.service.PaymentServiceProxy;
 import tu.sofia.bookings.service.RoomService;
 import tu.sofia.bookings.service.RoomServiceProxy;
 import tu.sofia.bookings.service.UserBookingService;
+import tu.sofia.bookings.service.UserProfileServiceProxy;
+import tu.sofia.bookings.service.UserRegistrationServiceProxy;
 import tu.sofia.bookings.service.UserService;
 
 /**
@@ -80,6 +82,8 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 		getSingletons().add(injector.getInstance(UserBookingService.class));
 		getSingletons().add(injector.getInstance(PaymentService.class));
 
+		getSingletons().add(injector.getInstance(UserProfileServiceProxy.class));
+		getSingletons().add(injector.getInstance(UserRegistrationServiceProxy.class));
 		getSingletons().add(injector.getInstance(RoomServiceProxy.class));
 		getSingletons().add(injector.getInstance(PaymentServiceProxy.class));
 	}
