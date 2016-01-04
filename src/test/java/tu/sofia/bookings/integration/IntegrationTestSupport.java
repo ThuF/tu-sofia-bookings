@@ -35,8 +35,8 @@ public abstract class IntegrationTestSupport {
 	private static final LogLevel logLevel = RestAdapter.LogLevel.NONE;
 
 	protected RestAdapter createRestAdapter() {
-		return new RestAdapter.Builder().setRequestInterceptor(new RequestInterceptorHandler()).setEndpoint(ENDPOINT_API).setLogLevel(logLevel)
-				.build();
+		return new RestAdapter.Builder().setRequestInterceptor(new RequestInterceptorHandler()).setEndpoint(ENDPOINT_API)
+				.setConverter(new DateConverter()).setLogLevel(logLevel).build();
 	}
 
 	protected void login(UserRole userRole) {
