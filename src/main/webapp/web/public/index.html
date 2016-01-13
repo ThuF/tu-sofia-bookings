@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="bookings">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,8 +30,11 @@
 
     <!-- Datepicker -->
     <script src="../../resources/js/bootstrap-datepicker.min.js"></script>
+
+	<script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/controllers/home.js"></script>
 </head>
-<body>
+<body ng-controller="HomeController">
     <!-- Header -->
     <header id="top" class="header">
         <div class="text-vertical-center">
@@ -43,7 +46,7 @@
             		<input id="datepicker-to" type="text" class="input-small" name="start" />
             </div>
             <br>
-            <a href="rooms" class="btn btn-dark btn-lg">Search</a>
+            <button type="button" class="btn btn-dark btn-lg" ng-click="searchRooms()">Search</button>
         </div>
     </header>
 

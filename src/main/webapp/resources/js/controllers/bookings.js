@@ -10,6 +10,9 @@ app.controller('BookingsController', function($scope, $http) {
 	    startDate: new Date()
 	});
 
+	$('#datepicker-from').datepicker('setDate', new Date(sessionStorage.getItem('startDate')));
+	$('#datepicker-to').datepicker('setDate', new Date(sessionStorage.getItem('endDate')));
+
  	$('#datepicker-from').datepicker().on('changeDate', function(e) {
  		$('#datepicker-to').datepicker('show');
  		updateSearchEnabled();
