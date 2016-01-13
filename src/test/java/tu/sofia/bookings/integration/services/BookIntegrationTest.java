@@ -78,7 +78,7 @@ public class BookIntegrationTest extends AbstractBookingsIntegrationTest {
 			assertResponseStatus(Status.BAD_REQUEST, e.getResponse());
 			ApplicationExceptionMessage message = getApplicationExceptionMessage(e);
 			assertEquals(Status.BAD_REQUEST.getStatusCode(), message.getStatus());
-			assertEquals("No user registered with userId [user]", message.getMessage());
+			assertEquals("No user registered with [userId=user]", message.getMessage());
 		}
 	}
 
