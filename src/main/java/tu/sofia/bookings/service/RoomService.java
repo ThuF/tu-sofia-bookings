@@ -110,7 +110,7 @@ public class RoomService {
 	public Room getRoom(@PathParam("id") Long id) {
 		unitOfWorkUtils.begin();
 
-		Room room = roomDao.findById(id);
+		Room room = getRoomEntity(id);
 		if (room == null) {
 			throw new NotFoundException();
 		}
@@ -176,7 +176,7 @@ public class RoomService {
 
 		Response response = null;
 		if (roomValidator.isValid(room)) {
-			Room persistedRoom = roomDao.findById(id);
+			Room persistedRoom = getRoomEntity(id);
 			if (persistedRoom != null) {
 				updateRoomProperties(persistedRoom, room);
 				roomDao.update(persistedRoom);
@@ -196,7 +196,9 @@ public class RoomService {
 		persistedRoom.setRoomType(room.getRoomType());
 		persistedRoom.setRoomView(room.getRoomView());
 		persistedRoom.setBedType(room.getBedType());
+		persistedRoom.setDefaultPricePerNight(room.getDefaultPricePerNight());
 		persistedRoom.setDescription(room.getDescription());
+		persistedRoom.setImagesUrl(room.getImagesUrl());
 	}
 
 	/**
@@ -208,11 +210,11 @@ public class RoomService {
 	 */
 	@DELETE
 	@Path("/{id}")
-	public Response deleteUser(@PathParam("id") Long id) {
+	public Response deleteRoom(@PathParam("id") Long id) {
 		unitOfWorkUtils.begin();
 
 		Response response = null;
-		Room room = roomDao.findById(id);
+		Room room = getRoomEntity(id);
 		if (room != null) {
 			roomDao.delete(room);
 			response = Response.status(Status.NO_CONTENT).build();
@@ -222,5 +224,15 @@ public class RoomService {
 
 		unitOfWorkUtils.end();
 		return response;
+	}
+
+	/**
+	 * Return the room entity
+	 *
+	 * @param id
+	 * @return the room entity
+	 */
+	public Room getRoomEntity(Long id) {
+		return roomDao.findById(id);
 	}
 }

@@ -74,7 +74,7 @@ public class UserService {
 	public User getUser(@PathParam("id") String id) {
 		unitOfWorkUtils.begin();
 
-		User user = userDao.findById(id);
+		User user = getUserEntity(id);
 		if (user == null) {
 			throw new NotFoundException();
 		}
@@ -139,7 +139,7 @@ public class UserService {
 		unitOfWorkUtils.begin();
 
 		Response response = null;
-		User persistedUser = userDao.findById(id);
+		User persistedUser = getUserEntity(id);
 		if (persistedUser != null) {
 			updateUserProperties(persistedUser, user);
 			userDao.update(persistedUser);
@@ -171,7 +171,7 @@ public class UserService {
 		unitOfWorkUtils.begin();
 
 		Response response = null;
-		User user = userDao.findById(id);
+		User user = getUserEntity(id);
 		if (user != null) {
 			userDao.delete(user);
 			response = Response.status(Status.NO_CONTENT).build();
@@ -181,5 +181,15 @@ public class UserService {
 
 		unitOfWorkUtils.end();
 		return response;
+	}
+
+	/**
+	 * Return the user entity
+	 *
+	 * @param id
+	 * @return the user entity
+	 */
+	public User getUserEntity(String id) {
+		return userDao.findById(id);
 	}
 }

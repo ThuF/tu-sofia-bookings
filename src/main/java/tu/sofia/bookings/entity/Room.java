@@ -1,6 +1,8 @@
 package tu.sofia.bookings.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,8 +52,13 @@ public class Room implements Serializable {
 	@Column(nullable = false)
 	private BedType bedType;
 
+	@Column(nullable = false)
+	private Double defaultPricePerNight = 0.0;
+
 	@Column(length = 1024)
 	private String description;
+
+	private List<String> imagesUrl;
 
 	/**
 	 * Returns the room id
@@ -130,6 +137,24 @@ public class Room implements Serializable {
 	}
 
 	/**
+	 * Returns the default price per night
+	 *
+	 * @return the default price per night
+	 */
+	public Double getDefaultPricePerNight() {
+		return defaultPricePerNight;
+	}
+
+	/**
+	 * Sets the default price per night
+	 *
+	 * @param defaultPrice
+	 */
+	public void setDefaultPricePerNight(Double defaultPrice) {
+		this.defaultPricePerNight = defaultPrice;
+	}
+
+	/**
 	 * Returns the description
 	 *
 	 * @return the description
@@ -146,5 +171,27 @@ public class Room implements Serializable {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	/**
+	 * Return the images url
+	 * 
+	 * @return the images url
+	 */
+	public List<String> getImagesUrl() {
+		if (imagesUrl == null) {
+			imagesUrl = new ArrayList<String>();
+		}
+		return imagesUrl;
+	}
+
+	/**
+	 * Sets the images url
+	 * 
+	 * @param imagesUrl
+	 *            the images url
+	 */
+	public void setImagesUrl(List<String> imagesUrl) {
+		this.imagesUrl = imagesUrl;
 	}
 }

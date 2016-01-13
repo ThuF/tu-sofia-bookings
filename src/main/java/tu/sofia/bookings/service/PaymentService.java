@@ -20,8 +20,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import tu.sofia.bookings.common.UnitOfWorkUtils;
-import tu.sofia.bookings.dao.RoomDao;
 import tu.sofia.bookings.dao.RoomPriceDao;
+import tu.sofia.bookings.entity.Room;
 import tu.sofia.bookings.entity.RoomPrice;
 import tu.sofia.bookings.validation.RoomPriceValidator;
 import tu.sofia.bookings.validation.ValidationErrorResponseBuilder;
@@ -35,11 +35,12 @@ import tu.sofia.bookings.validation.interfaces.IRoomPriceValidator;
 public class PaymentService {
 
 	private static final String VALIDATION_MESSAGE_NO_ROOM_PRICE_FOUND_WITH_ROOM_ID = "No room price found with [roomId={0}]";
+	private static final String VALIDATION_MESSAGE_THERE_IS_NO_PRICE_FOR_A_ROOM_WITH_ROOM_ID = "There is no price for a room with [roomId={0}]";
 
 	private UnitOfWorkUtils unitOfWorkUtils;
 	private IRoomPriceValidator roomPriceValidator;
 	private RoomPriceDao roomPriceDao;
-	private RoomDao roomDao;
+	private RoomService roomService;
 
 	/**
 	 * Constructor
@@ -47,14 +48,15 @@ public class PaymentService {
 	 * @param unitOfWorkUtils
 	 * @param roomPriceValidator
 	 * @param roomPriceDao
-	 * @param roomDao
+	 * @param roomService
 	 */
 	@Inject
-	public PaymentService(UnitOfWorkUtils unitOfWorkUtils, RoomPriceValidator roomPriceValidator, RoomPriceDao roomPriceDao, RoomDao roomDao) {
+	public PaymentService(UnitOfWorkUtils unitOfWorkUtils, RoomPriceValidator roomPriceValidator, RoomPriceDao roomPriceDao,
+			RoomService roomService) {
 		this.unitOfWorkUtils = unitOfWorkUtils;
 		this.roomPriceValidator = roomPriceValidator;
 		this.roomPriceDao = roomPriceDao;
-		this.roomDao = roomDao;
+		this.roomService = roomService;
 	}
 
 	/**
@@ -86,13 +88,21 @@ public class PaymentService {
 	public Double getRoomPrice(@PathParam("id") Long id) {
 		unitOfWorkUtils.begin();
 
-		RoomPrice roomPrice = roomPriceDao.findById(id);
-		if (roomPrice == null) {
-			throw new NotFoundException();
+		Double price = null;
+		RoomPrice roomPrice = getRoomPriceEntity(id);
+		if (roomPrice != null) {
+			price = roomPrice.getPrice();
+		} else {
+			Room room = roomService.getRoomEntity(id);
+			if (room != null) {
+				price = room.getDefaultPricePerNight();
+			} else {
+				throw new NotFoundException(MessageFormat.format(VALIDATION_MESSAGE_THERE_IS_NO_PRICE_FOR_A_ROOM_WITH_ROOM_ID, id));
+			}
 		}
 
 		unitOfWorkUtils.end();
-		return roomPrice.getPrice();
+		return price;
 	}
 
 	/**
@@ -126,7 +136,7 @@ public class PaymentService {
 		unitOfWorkUtils.begin();
 
 		Response response = null;
-		if (roomPriceValidator.isValid(roomPrice, roomDao, roomPriceDao)) {
+		if (roomPriceValidator.isValid(roomPrice, roomPriceDao, roomService)) {
 			roomPriceDao.create(roomPrice);
 			response = Response.status(Status.CREATED).entity(roomPrice.getRoomId()).build();
 		} else {
@@ -191,5 +201,15 @@ public class PaymentService {
 
 		unitOfWorkUtils.end();
 		return response;
+	}
+
+	/**
+	 * Return the room price entity
+	 *
+	 * @param id
+	 * @return the room price entity
+	 */
+	public RoomPrice getRoomPriceEntity(Long id) {
+		return roomPriceDao.findById(id);
 	}
 }

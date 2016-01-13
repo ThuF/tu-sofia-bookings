@@ -85,6 +85,14 @@
 			"value": "TWIN"
 		}]
 	}, {
+		"id": "defaultPricePerNight",
+		"name": "Default Price Per Night"
+	}, {
+		"id": "imagesUrl",
+		"name": "Images",
+		"optional": true,
+		"textarea": true
+	}, {
 		"id": "description",
 		"name": "Description",
 		"optional": true,

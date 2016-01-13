@@ -82,10 +82,10 @@ bookignsApp.config(function($routeProvider){
             case 'show':
                 break;
             case 'new':
-                newEntry($scope.newEntry);
+                newEntry(transformEntry($scope.newEntry));
                 break;
             case 'update':
-                updateEntry($scope.selectedEntry);
+                updateEntry(transformEntry($scope.selectedEntry));
                 break;
         }
     };
@@ -160,9 +160,20 @@ bookignsApp.config(function($routeProvider){
     		'roomType': null,
     		'roomView': null,
     		'bedType': null,
+    		'defaultPricePerNight': 0,
+    		'imagesUrl': [],
     		'description': null
     	}
     }
+
+    function transformEntry(entry) {
+    	var entryCopy = entry;
+		var images = entryCopy.imagesUrl;
+		if (images != null) {
+			entryCopy.imagesUrl = images.split(',');
+		}
+		return entryCopy;
+	}
 }).controller('MenuController', function($scope, $http) {
 	$http.get('resources/menu.json').success(function(data) {
 		$scope.menus = data;
