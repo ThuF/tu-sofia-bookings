@@ -169,7 +169,7 @@ bookignsApp.config(function($routeProvider){
     function transformEntry(entry) {
     	var entryCopy = entry;
 		var images = entryCopy.imagesUrl;
-		if (images != null) {
+		if (images != null && !Array.isArray(images)) {
 			entryCopy.imagesUrl = images.split(',');
 		}
 		return entryCopy;

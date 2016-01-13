@@ -41,27 +41,13 @@
             <h1>Gran Hotel Bali</h1>
             <h3>Booking dates</h3>
             <div id="booking-daterange" class="input-daterange">
-            		<input id="datepicker-from" type="text" class="input-small" name="start" />
+            		<input id="datepicker-from" type="text" class="input-small" name="start" ng-model="startDate" />
             		<span class="add-on">to</span>
-            		<input id="datepicker-to" type="text" class="input-small" name="start" />
+            		<input id="datepicker-to" type="text" class="input-small" name="start" ng-model="endDate" />
             </div>
             <br>
-            <button type="button" class="btn btn-dark btn-lg" ng-click="searchRooms()">Search</button>
+            <button type="button" class="btn btn-dark btn-lg" ng-click="searchRooms()" ng-disabled="!startDate || !endDate">Search</button>
         </div>
     </header>
-
-	 <script type="text/javascript">
-	 	$('#booking-daterange').datepicker({
-		    autoclose: true,
-	 		calendarWeeks: true,
-		    todayHighlight: true,
-		    todayBtn: true,
-		    startDate: new Date()
-		});
-
-	 	$('#datepicker-from').datepicker().on('changeDate', function(e) {
-	 		$('#datepicker-to').datepicker('show');
-	 	});
-	 </script>
 </body>
 </html>

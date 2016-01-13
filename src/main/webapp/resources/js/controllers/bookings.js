@@ -2,6 +2,13 @@ var app = angular.module('bookings', []);
 
 app.controller('BookingsController', function($scope, $http) {
 
+	initialSearchValidation();
+
+	function initialSearchValidation() {
+		if (sessionStorage.getItem('startDate') == null || sessionStorage.getItem('endDate') == null) {
+			window.location.href = "../";
+		}
+	}
 	$('#booking-daterange').datepicker({
 	    autoclose: true,
  		calendarWeeks: true,
@@ -15,15 +22,17 @@ app.controller('BookingsController', function($scope, $http) {
 
  	$('#datepicker-from').datepicker().on('changeDate', function(e) {
  		$('#datepicker-to').datepicker('show');
+ 		sessionStorage.setItem('startDate', e.date);
  		updateSearchEnabled();
  	});
 
  	$('#datepicker-to').datepicker().on('changeDate', function(e) {
+ 		sessionStorage.setItem('endDate', e.date);
  		updateSearchEnabled();
  	});
 
 	$scope.rooms = [];
-	$scope.selectedRoomPrice = null;
+	$scope.selectedRoomTotalPrice = null;
 	$scope.selectedRoomRating = null;
 	$scope.selectedRoomReviews = [];
 	$scope.isSearchEnabled = false;
@@ -33,6 +42,7 @@ app.controller('BookingsController', function($scope, $http) {
 	}
 
 	$scope.getAvailableRooms = function() {
+		updateSearchEnabled();
 		if($scope.isSearchEnabled) {
 			var startDate = getStartDate().getTime();
 			var endDate = getEndDate().getTime();
@@ -56,7 +66,7 @@ app.controller('BookingsController', function($scope, $http) {
 		});
 	}
 
-	loadRooms();
+	$scope.getAvailableRooms();
 	getUser();
 
 	function loadRooms() {
@@ -82,14 +92,18 @@ app.controller('BookingsController', function($scope, $http) {
 
 	function updatePageProperties(index) {
 		$scope.selectedRoom = $scope.rooms[index];
-		loadSelectedRoomPrice($scope.selectedRoom.roomId);
+		loadSelectedRoomTotalPrice($scope.selectedRoom.roomId);
 		loadSelectedRoomReviews($scope.selectedRoom.roomId);
 	}
 
-	function loadSelectedRoomPrice(roomId) {
+	function loadSelectedRoomTotalPrice(roomId) {
 		$http.get('../../../api/v1/public/payment/rooms/' + roomId + "/price").success(function(data){
-			$scope.selectedRoomPrice = data;
+			$scope.selectedRoomTotalPrice = data * getDaysBetween(getStartDate(), getEndDate());
 		});
+	}
+
+	function getDaysBetween(firstDate, secondDate) {
+	    return Math.round((secondDate - firstDate) / (1000 * 60 * 60 * 24));
 	}
 
 	function loadSelectedRoomReviews(roomId) {

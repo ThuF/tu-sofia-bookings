@@ -97,12 +97,12 @@
                 	<div id="roomImagesCarousel" class="carousel slide" data-ride="carousel">
 					  <!-- Indicators -->
 						<ol class="carousel-indicators">
-							<li ng-repeat="image in selectedRoom.images" data-target="#roomImagesCarousel" data-slide-to="{{$index}}" ng-class="($index === 0) ? 'active' : ''"></li>
+							<li ng-repeat="image in selectedRoom.imagesUrl" data-target="#roomImagesCarousel" data-slide-to="{{$index}}" ng-class="($index === 0) ? 'active' : ''"></li>
 					  	</ol>
 					
 					  <!-- Wrapper for slides -->
 					  	<div class="carousel-inner" role="listbox">
-					    	<div ng-repeat="image in selectedRoom.images" ng-class="($index === 0) ? 'item active' : 'item'">
+					    	<div ng-repeat="image in selectedRoom.imagesUrl" ng-class="($index === 0) ? 'item active' : 'item'">
 					      		<img ng-src="{{image}}" alt="Room">
 					    	</div>
 					  	</div>
@@ -120,7 +120,7 @@
 
                     <img class="img-responsive" ng-src="{{selectedRoom.image}}" alt="">
                     <div class="caption-full">
-                        <h4 class="pull-right">${{selectedRoomPrice}}</h4>
+                        <h4 class="pull-right">${{selectedRoomTotalPrice}}</h4>
                         <h4><a href="#">Description</a>
                         </h4>
                         <div class="text-right">
