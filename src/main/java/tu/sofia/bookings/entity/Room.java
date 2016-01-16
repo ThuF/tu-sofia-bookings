@@ -55,7 +55,7 @@ public class Room implements Serializable {
 	@Column(nullable = false)
 	private Double defaultPricePerNight = 0.0;
 
-	@Column(length = 1024)
+	@Column(length = 4096)
 	private String description;
 
 	private List<String> imagesUrl;
@@ -175,7 +175,7 @@ public class Room implements Serializable {
 
 	/**
 	 * Return the images url
-	 * 
+	 *
 	 * @return the images url
 	 */
 	public List<String> getImagesUrl() {
@@ -187,7 +187,7 @@ public class Room implements Serializable {
 
 	/**
 	 * Sets the images url
-	 * 
+	 *
 	 * @param imagesUrl
 	 *            the images url
 	 */

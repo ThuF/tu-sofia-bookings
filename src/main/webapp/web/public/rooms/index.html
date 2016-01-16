@@ -87,7 +87,7 @@
 				<hr>
                 <p class="lead">Available Rooms</p>
                 <div class="list-group">
-                    <a href="#" ng-class="(room == selectedRoom) ? 'active list-group-item' : 'list-group-item'" ng-repeat="room in rooms" ng-click="setSelectedRoom($index)")>{{$index + 1}} | {{room.roomType}}</a>
+                    <a href="#" ng-class="(room == selectedRoom) ? 'active list-group-item' : 'list-group-item'" ng-repeat="room in rooms" ng-click="setSelectedRoom($index)")>{{$index + 1}} | {{room.roomType}}, {{room.bedType}}</a>
                 </div>
             </div>
 
@@ -121,11 +121,11 @@
                     <img class="img-responsive" ng-src="{{selectedRoom.image}}" alt="">
                     <div class="caption-full">
                         <h4 class="pull-right">${{selectedRoomTotalPrice}}</h4>
-                        <h4><a href="#">Description</a>
-                        </h4>
+                        <h4><a href="#">{{selectedRoom.roomView}}</a></h4>
                         <div class="text-right">
     	                    <button class="btn btn-primary" ng-click="bookSelectedRoom()" ng-disabled="!user">Book</button>
 	                    </div>
+                        <h4>Description</h4>
                         <p>{{selectedRoom.description}}</p>
                     </div>
                     <div class="ratings">
