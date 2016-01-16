@@ -147,8 +147,9 @@
 	                    <div class="row">
 	                        <div class="col-md-12">
 	                            <span ng-repeat="star in review.rating track by $index" ng-class="star === true ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'"></span>
-	                            {{review.username}}
-	                            <span class="pull-right">{{review.daysBefore}} {{review.daysBefore > 1 ? 'days' : 'day'}} ago</span>
+	                            {{review.userName}}
+	                            <span class="pull-right" ng-show="review.daysBefore > 0">{{review.daysBefore}} {{review.daysBefore > 1 ? 'days' : 'day'}} ago</span>
+	                            <span class="pull-right" ng-show="review.daysBefore == 0">today</span>
 	                            <p>{{review.comment}}</p>
 	                        </div>
 	                    </div>

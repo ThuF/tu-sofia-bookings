@@ -1,6 +1,7 @@
 package tu.sofia.bookings.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.IdClass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import tu.sofia.bookings.entity.key.RoomReviewKey;
 
@@ -48,6 +51,10 @@ public class RoomReview implements Serializable {
 
 	@Column(length = 4096)
 	private String comment;
+
+	@Temporal(TemporalType.DATE)
+	@Column(nullable = false)
+	private Date date = new Date();
 
 	/**
 	 * Returns the room Id
@@ -142,5 +149,24 @@ public class RoomReview implements Serializable {
 	 */
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	/**
+	 * Returns the date
+	 * 
+	 * @return the date
+	 */
+	public Date getDate() {
+		return date;
+	}
+
+	/**
+	 * Sets the date
+	 * 
+	 * @param date
+	 *            the date
+	 */
+	public void setDate(Date date) {
+		this.date = date;
 	}
 }

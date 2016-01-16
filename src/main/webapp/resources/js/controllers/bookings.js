@@ -1,3 +1,14 @@
+function formatDate(date) {
+	var month = '' + (date.getMonth() + 1);
+	var day = '' + date.getDate();
+	var year = date.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [day, month, year].join('-');
+}
+
 var app = angular.module('bookings', []);
 
 app.controller('BookingsController', function($scope, $http) {
@@ -61,27 +72,32 @@ app.controller('BookingsController', function($scope, $http) {
 				'endDate': getEndDate()
 		};
 
-		$http.post('../../../api/v1/protected/user/book', data).success(function(data) {
-			alert("Booking successfull!");
-		});
+		var message = "Do you want to book the selected room, " +
+				"for the period from [" + formatDate(data.startDate) + "] to [" + formatDate(data.endDate) + "], " +
+				"for a total price of $" + $scope.selectedRoomTotalPrice + "?";
+		if(confirm(message)) {
+			$http.post('../../../api/v1/protected/user/book', data).success(function(data) {
+				alert("Booking successfull!");
+			});
+		}
 	}
 
 	$scope.getAvailableRooms();
 	getUser();
 
 	function loadRooms() {
-		$http.get('../../../api/v1/public/rooms').success(function(data){
+		$http.get('../../../api/v1/public/rooms').success(function(data) {
 			$scope.rooms = data;
 			updatePageProperties(0);
 		});
 	}
 
 	function getUser() {
-		$http.get('../../../api/v1/public/user/profile').success(function(data){
+		$http.get('../../../api/v1/public/user/profile').success(function(data) {
 			$scope.user = data;
 		}).error(function(data, status) {
 			if (status == 404) {
-				$http.post('../../../api/v1/protected/user/register').success(function(data){
+				$http.post('../../../api/v1/protected/user/register').success(function(data) {
 					getUser();
 				}).error(function(data, status) {
 					alert('Unable to register user');
@@ -97,7 +113,7 @@ app.controller('BookingsController', function($scope, $http) {
 	}
 
 	function loadSelectedRoomTotalPrice(roomId) {
-		$http.get('../../../api/v1/public/payment/rooms/' + roomId + "/price").success(function(data){
+		$http.get('../../../api/v1/public/payment/rooms/' + roomId + "/price").success(function(data) {
 			$scope.selectedRoomTotalPrice = data * getDaysBetween(getStartDate(), getEndDate());
 		});
 	}
@@ -107,22 +123,15 @@ app.controller('BookingsController', function($scope, $http) {
 	}
 
 	function loadSelectedRoomReviews(roomId) {
-		$scope.selectedRoomReviews.push({
-			'rating': 3,
-			'username': 'Yordan Pavlov',
-			'comment': 'This product was great in terms of quality. I would definitely buy another!',
-			'daysBefore': '1'
+		$http.get('../../../api/v1/public/reviews/room/' + roomId).success(function(data) {
+			$scope.selectedRoomReviews = data;
+			var ratingSum = 0;
+			$scope.selectedRoomReviews.forEach(function(next) {
+				ratingSum += next.rating;
+				next.rating = createRatingArray(next.rating);
+			});
+			$scope.selectedRoomRating = createRatingArray(Math.round((ratingSum/ $scope.selectedRoomReviews.length)));		
 		});
-		$scope.selectedRoomReviews.push({
-			'rating': 4,
-			'username': 'Desislava Rasheva',
-			'comment': 'This product was great in terms of quality. I would definitely buy another!',
-			'daysBefore': '2'
-		});
-		$scope.selectedRoomReviews.forEach(function(next){
-			next.rating = createRatingArray(next.rating);
-		});
-		$scope.selectedRoomRating = createRatingArray(2);		
 	}
 
 	function createRatingArray(rating) {

@@ -1,5 +1,6 @@
 package tu.sofia.bookings.service.proxy.publics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -12,6 +13,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import tu.sofia.bookings.entity.RoomReview;
+import tu.sofia.bookings.entity.dto.RoomReviewDto;
 import tu.sofia.bookings.service.RoomReviewService;
 
 /**
@@ -35,15 +37,19 @@ public class RoomReviewServicePublicProxy {
 
 	/**
 	 * Returns a list of all rooms
-	 * 
+	 *
 	 * @param roomId
 	 * @return list of all rooms
 	 */
 	@GET
 	@Path("/room/{roomId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<RoomReview> getReviews(@PathParam("roomId") Long roomId) {
-		return roomReviewService.getReviewsByRoomId(roomId);
+	public List<RoomReviewDto> getReviews(@PathParam("roomId") Long roomId) {
+		List<RoomReviewDto> reviews = new ArrayList<RoomReviewDto>();
+		for (RoomReview next : roomReviewService.getReviewsByRoomId(roomId)) {
+			reviews.add(new RoomReviewDto(next));
+		}
+		return reviews;
 	}
 
 }
