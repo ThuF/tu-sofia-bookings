@@ -174,7 +174,7 @@ public class Room implements Serializable {
 	}
 
 	/**
-	 * Return the images url
+	 * Returns the images url
 	 *
 	 * @return the images url
 	 */

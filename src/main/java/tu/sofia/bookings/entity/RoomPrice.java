@@ -16,6 +16,7 @@ public class RoomPrice implements Serializable {
 
 	private static final long serialVersionUID = 4969339263331724303L;
 
+	// TODO Use composite key - roomId - startDate - endDate
 	@Id
 	private Long roomId;
 
@@ -43,7 +44,7 @@ public class RoomPrice implements Serializable {
 
 	/**
 	 * Returns the price
-	 * 
+	 *
 	 * @return the price
 	 */
 	public Double getPrice() {
@@ -52,7 +53,7 @@ public class RoomPrice implements Serializable {
 
 	/**
 	 * Sets the price
-	 * 
+	 *
 	 * @param price
 	 *            the price
 	 */

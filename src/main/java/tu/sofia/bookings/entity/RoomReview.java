@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import tu.sofia.bookings.entity.key.RoomReviewKey;
@@ -16,9 +18,22 @@ import tu.sofia.bookings.entity.key.RoomReviewKey;
 @Entity
 @Table(name = "T_ROOM_REVIEW")
 @IdClass(RoomReviewKey.class)
+@NamedQueries(@NamedQuery(name = RoomReview.QUERY_NAME_FIND_BY_ROOM_ID, query = RoomReview.QUERY_FIND_BY_ROOM_ID))
 public class RoomReview implements Serializable {
 
 	private static final long serialVersionUID = -3038006539103362713L;
+
+	/**
+	 * The name of a query for finding all reviews filtered by room Id
+	 */
+	public static final String QUERY_NAME_FIND_BY_ROOM_ID = "findByRoomId";
+
+	/**
+	 * The roomId parameter
+	 */
+	public static final String PARAM_ROOM_ID = "roomId";
+
+	static final String QUERY_FIND_BY_ROOM_ID = "select r from RoomReview r where r.roomId = :" + PARAM_ROOM_ID;
 
 	@Id
 	private Long roomId;
@@ -74,7 +89,7 @@ public class RoomReview implements Serializable {
 
 	/**
 	 * Returns the user name
-	 * 
+	 *
 	 * @return the user name
 	 */
 	public String getUserName() {
@@ -83,7 +98,7 @@ public class RoomReview implements Serializable {
 
 	/**
 	 * Sets the user name
-	 * 
+	 *
 	 * @param userName
 	 *            the user name
 	 */

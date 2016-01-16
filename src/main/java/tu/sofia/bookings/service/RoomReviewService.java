@@ -166,7 +166,7 @@ public class RoomReviewService {
 
 	/**
 	 * Updates existing room review
-	 * 
+	 *
 	 * @param roomId
 	 * @param userId
 	 * @param roomReview
@@ -225,12 +225,22 @@ public class RoomReviewService {
 	}
 
 	/**
-	 * Return the room review entity
+	 * Returns the room review entity
 	 *
 	 * @param id
 	 * @return the room review entity
 	 */
 	public RoomReview getRoomReviewEntity(RoomReviewKey id) {
 		return roomReviewDao.findById(id);
+	}
+
+	/**
+	 * Returns a list of all reviews filtered by room Id
+	 * 
+	 * @param roomId
+	 * @return a list of all reviews filtered by room Id
+	 */
+	public List<RoomReview> getReviewsByRoomId(Long roomId) {
+		return roomReviewDao.findByRoomId(roomId);
 	}
 }
