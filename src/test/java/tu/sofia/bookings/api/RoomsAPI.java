@@ -16,15 +16,12 @@ import tu.sofia.bookings.entity.Room;
 public interface RoomsAPI {
 
 	@GET("/protected/admin/rooms")
-	@Headers("Accept: application/json")
 	List<Room> get();
 
 	@GET("/protected/admin/rooms/{id}")
-	@Headers("Accept: application/json")
 	Room get(@Path("id") final Long id);
 
 	@GET("/protected/admin/rooms/startdate/{startDate}/enddate/{endDate}")
-	@Headers("Accept: application/json")
 	List<Room> getAvailableRooms(@Path("startDate") final Long startDate, @Path("endDate") final Long endDate);
 
 	@GET("/protected/admin/rooms/count")
@@ -35,10 +32,8 @@ public interface RoomsAPI {
 	Response add(@Body final Room body);
 
 	@PUT("/protected/admin/rooms/{id}")
-	@Headers("Accept: application/json")
 	Response update(@Path("id") final Long id, @Body final Room body);
 
 	@DELETE("/protected/admin/rooms/{id}")
-	@Headers("Accept: application/json")
 	Response remove(@Path("id") final Long id);
 }

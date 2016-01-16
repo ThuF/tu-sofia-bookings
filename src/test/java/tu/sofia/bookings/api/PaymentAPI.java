@@ -16,7 +16,6 @@ import tu.sofia.bookings.entity.RoomPrice;
 public interface PaymentAPI {
 
 	@GET("/protected/admin/payment/rooms")
-	@Headers("Accept: application/json")
 	List<RoomPrice> get();
 
 	@GET("/protected/admin/payment/rooms/{id}/price")

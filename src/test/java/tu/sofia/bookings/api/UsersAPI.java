@@ -27,14 +27,11 @@ public interface UsersAPI {
 	Long count();
 
 	@POST("/protected/admin/users")
-	@Headers("Accept: application/json")
 	Response add(@Body final User body);
 
 	@PUT("/protected/admin/users/{id}")
-	@Headers("Accept: application/json")
 	Response update(@Path("id") final String id, @Body final User body);
 
 	@DELETE("/protected/admin/users/{id}")
-	@Headers("Accept: application/json")
 	Response remove(@Path("id") final String id);
 }
