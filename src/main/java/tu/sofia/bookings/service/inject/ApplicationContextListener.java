@@ -19,15 +19,15 @@ import tu.sofia.bookings.service.BookingService;
 import tu.sofia.bookings.service.GeneralExceptionHandler;
 import tu.sofia.bookings.service.GsonMessageBodyHandler;
 import tu.sofia.bookings.service.PaymentService;
-import tu.sofia.bookings.service.PaymentServiceProxy;
-import tu.sofia.bookings.service.PublicUserProfileServiceProxy;
 import tu.sofia.bookings.service.RoomReviewService;
 import tu.sofia.bookings.service.RoomService;
-import tu.sofia.bookings.service.RoomServiceProxy;
 import tu.sofia.bookings.service.UserBookingService;
-import tu.sofia.bookings.service.UserProfileServiceProxy;
-import tu.sofia.bookings.service.UserRegistrationServiceProxy;
 import tu.sofia.bookings.service.UserService;
+import tu.sofia.bookings.service.proxy.protecteds.ProfileServiceUserProxy;
+import tu.sofia.bookings.service.proxy.protecteds.RegistrationServiceUserProxy;
+import tu.sofia.bookings.service.proxy.publics.PaymentServicePublicProxy;
+import tu.sofia.bookings.service.proxy.publics.RoomServicePublicProxy;
+import tu.sofia.bookings.service.proxy.publics.UserProfileServicePublicProxy;
 
 /**
  * This class handles the initialization of all Guice modules and all REST API
@@ -77,19 +77,26 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 	private void addServices() {
 		getSingletons().add(new GsonMessageBodyHandler<Object>());
 		getSingletons().add(new GeneralExceptionHandler());
+
+		// Services protected with the Admin role
 		getSingletons().add(injector.getInstance(UserService.class));
 		getSingletons().add(injector.getInstance(RoomService.class));
 		getSingletons().add(injector.getInstance(RoomReviewService.class));
-		getSingletons().add(injector.getInstance(BookService.class));
 		getSingletons().add(injector.getInstance(BookingService.class));
-		getSingletons().add(injector.getInstance(UserBookingService.class));
 		getSingletons().add(injector.getInstance(PaymentService.class));
 
-		getSingletons().add(injector.getInstance(PublicUserProfileServiceProxy.class));
-		getSingletons().add(injector.getInstance(UserProfileServiceProxy.class));
-		getSingletons().add(injector.getInstance(UserRegistrationServiceProxy.class));
-		getSingletons().add(injector.getInstance(RoomServiceProxy.class));
-		getSingletons().add(injector.getInstance(PaymentServiceProxy.class));
+		// Services protected with the Everyone role
+		getSingletons().add(injector.getInstance(BookService.class));
+		getSingletons().add(injector.getInstance(UserBookingService.class));
+
+		// Proxy services protected with the Everyone role
+		getSingletons().add(injector.getInstance(ProfileServiceUserProxy.class));
+		getSingletons().add(injector.getInstance(RegistrationServiceUserProxy.class));
+
+		// Public proxy services
+		getSingletons().add(injector.getInstance(UserProfileServicePublicProxy.class));
+		getSingletons().add(injector.getInstance(RoomServicePublicProxy.class));
+		getSingletons().add(injector.getInstance(PaymentServicePublicProxy.class));
 	}
 
 	/**

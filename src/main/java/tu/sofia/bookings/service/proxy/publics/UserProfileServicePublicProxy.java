@@ -1,4 +1,4 @@
-package tu.sofia.bookings.service;
+package tu.sofia.bookings.service.proxy.publics;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -11,15 +11,16 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import tu.sofia.bookings.entity.User;
+import tu.sofia.bookings.service.proxy.protecteds.ProfileServiceUserProxy;
 
 /**
  * Service for registering users
  */
 @Singleton
 @Path("/public/user/profile")
-public class PublicUserProfileServiceProxy {
+public class UserProfileServicePublicProxy {
 
-	private UserProfileServiceProxy userProfileServiceProxy;
+	private ProfileServiceUserProxy userProfileServiceProxy;
 
 	/**
 	 * Constructor
@@ -27,7 +28,7 @@ public class PublicUserProfileServiceProxy {
 	 * @param userProfileServiceProxy
 	 */
 	@Inject
-	public PublicUserProfileServiceProxy(UserProfileServiceProxy userProfileServiceProxy) {
+	public UserProfileServicePublicProxy(ProfileServiceUserProxy userProfileServiceProxy) {
 		this.userProfileServiceProxy = userProfileServiceProxy;
 	}
 

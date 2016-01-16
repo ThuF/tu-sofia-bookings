@@ -1,4 +1,4 @@
-package tu.sofia.bookings.service;
+package tu.sofia.bookings.service.proxy.publics;
 
 import java.util.List;
 
@@ -12,13 +12,14 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import tu.sofia.bookings.entity.Room;
+import tu.sofia.bookings.service.RoomService;
 
 /**
  * Proxy service for rooms
  */
 @Singleton
 @Path("/public/rooms")
-public class RoomServiceProxy {
+public class RoomServicePublicProxy {
 
 	private RoomService roomService;
 
@@ -28,7 +29,7 @@ public class RoomServiceProxy {
 	 * @param roomService
 	 */
 	@Inject
-	public RoomServiceProxy(RoomService roomService) {
+	public RoomServicePublicProxy(RoomService roomService) {
 		this.roomService = roomService;
 	}
 

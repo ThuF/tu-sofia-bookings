@@ -1,4 +1,4 @@
-package tu.sofia.bookings.service;
+package tu.sofia.bookings.service.proxy.publics;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -9,12 +9,14 @@ import javax.ws.rs.core.MediaType;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import tu.sofia.bookings.service.PaymentService;
+
 /**
  * Proxy service for payment
  */
 @Singleton
 @Path("/public/payment")
-public class PaymentServiceProxy {
+public class PaymentServicePublicProxy {
 
 	private PaymentService paymentService;
 
@@ -24,7 +26,7 @@ public class PaymentServiceProxy {
 	 * @param paymentService
 	 */
 	@Inject
-	public PaymentServiceProxy(PaymentService paymentService) {
+	public PaymentServicePublicProxy(PaymentService paymentService) {
 		this.paymentService = paymentService;
 	}
 
