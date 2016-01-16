@@ -42,11 +42,16 @@ app.controller('BookingsController', function($scope, $http) {
  		updateSearchEnabled();
  	});
 
+ 	$("#review-rating").on("rating.change", function(event, value) {
+ 		$scope.review.rating = value;
+ 	});
+
 	$scope.rooms = [];
 	$scope.selectedRoomTotalPrice = null;
 	$scope.selectedRoomRating = null;
 	$scope.selectedRoomReviews = [];
 	$scope.isSearchEnabled = false;
+	$scope.review = {};
 
 	$scope.setSelectedRoom = function(index) {
 		updatePageProperties(index);
@@ -82,6 +87,15 @@ app.controller('BookingsController', function($scope, $http) {
 		}
 	}
 
+	$scope.submitReview = function() {
+		$scope.review.roomId = $scope.selectedRoom.roomId;
+		if(confirm("Do you really want to submit a review?")) {
+			$http.post('../../../api/v1/protected/user/reviews', $scope.review).success(function(data) {
+				alert("The review was successfully added!");
+			});
+		}
+	}
+
 	$scope.getAvailableRooms();
 	getUser();
 
@@ -110,6 +124,7 @@ app.controller('BookingsController', function($scope, $http) {
 		$scope.selectedRoom = $scope.rooms[index];
 		loadSelectedRoomTotalPrice($scope.selectedRoom.roomId);
 		loadSelectedRoomReviews($scope.selectedRoom.roomId);
+		loadCanWriteReview($scope.selectedRoom.roomId);
 	}
 
 	function loadSelectedRoomTotalPrice(roomId) {
@@ -143,6 +158,13 @@ app.controller('BookingsController', function($scope, $http) {
 		return ratingArray;
 	}
 
+	function loadCanWriteReview(roomId) {
+		if ($scope.user) {
+			$http.get('../../../api/v1/protected/user/reviews/room/' + roomId).success(function(data) {
+				$scope.canWriteReview = !data;
+			});
+		}
+	}
 	function getStartDate() {
 		return $('#datepicker-from').datepicker('getDate');
 	}

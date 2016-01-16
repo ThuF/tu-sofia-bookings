@@ -18,8 +18,12 @@
 	<!-- Custom CSS -->
     <link href="../../../resources/css/custom.css" rel="stylesheet">
 
-	<!-- Datepicker CSS -->
+    <!-- Datepicker CSS -->
     <link href="../../../resources/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+
+	<!-- Star Rating CSS -->
+    <link href="../../../resources/css/star-rating.min.css" rel="stylesheet">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -36,6 +40,9 @@
 	<!-- Datepicker -->
     <script src="../../../resources/js/bootstrap-datepicker.min.js"></script>
 
+	<!-- Start Rating -->
+    <script src="../../../resources/js/star-rating.min.js"></script>
+    
     <!-- Bootstrap Core JavaScript -->
     <script src="../../../resources/js/bootstrap.min.js"></script>
 </head>
@@ -139,9 +146,8 @@
 
                 <div class="well">
                     <div class="text-right">
-                        <a class="btn btn-success" ng-disabled="!user">Leave a Review</a>
+                        <a class="btn btn-success" href="#review" ng-disabled="!user || !canWriteReview">Leave a Review</a>
                     </div>
-
 					<div ng-repeat="review in selectedRoomReviews">
 	                    <hr>
 	                    <div class="row">
@@ -154,6 +160,15 @@
 	                        </div>
 	                    </div>
 					</div>
+					<div id="review" ng-hide="!user || !canWriteReview">
+	                    <hr>
+	                    <input id="review-rating" class="rating" data-min="0" data-max="5" data-step="1" data-size="xs">
+	                    <textarea class="form-control" ng-model="review.comment" rows="5"></textarea>
+	                    <hr>
+	                    <div class="text-right">
+		                    <button class="btn btn-success" ng-disabled="!user" ng-click="submitReview()">Submit</button>
+	                    </div>
+                    </div>
                 </div>
             </div>
         </div>

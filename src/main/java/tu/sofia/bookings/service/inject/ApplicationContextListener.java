@@ -25,6 +25,7 @@ import tu.sofia.bookings.service.UserBookingService;
 import tu.sofia.bookings.service.UserService;
 import tu.sofia.bookings.service.proxy.protecteds.ProfileServiceUserProxy;
 import tu.sofia.bookings.service.proxy.protecteds.RegistrationServiceUserProxy;
+import tu.sofia.bookings.service.proxy.protecteds.RoomReviewServiceUserProxy;
 import tu.sofia.bookings.service.proxy.publics.PaymentServicePublicProxy;
 import tu.sofia.bookings.service.proxy.publics.RoomReviewServicePublicProxy;
 import tu.sofia.bookings.service.proxy.publics.RoomServicePublicProxy;
@@ -93,6 +94,7 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 		// Proxy services protected with the Everyone role
 		getSingletons().add(injector.getInstance(ProfileServiceUserProxy.class));
 		getSingletons().add(injector.getInstance(RegistrationServiceUserProxy.class));
+		getSingletons().add(injector.getInstance(RoomReviewServiceUserProxy.class));
 
 		// Public proxy services
 		getSingletons().add(injector.getInstance(UserProfileServicePublicProxy.class));
