@@ -1,11 +1,15 @@
 package tu.sofia.bookings.validation;
 
+import java.io.Serializable;
+
 import javax.ws.rs.core.Response.Status;
 
 /**
  * Error message that is returned if an application error occur
  */
-public class ApplicationExceptionMessage {
+public class ApplicationExceptionMessage implements Serializable {
+
+	private static final long serialVersionUID = 1395649967229346126L;
 
 	private int status;
 
@@ -59,7 +63,7 @@ public class ApplicationExceptionMessage {
 
 	/**
 	 * Sets the status
-	 * 
+	 *
 	 * @param status
 	 *            the status
 	 */
@@ -69,7 +73,7 @@ public class ApplicationExceptionMessage {
 
 	/**
 	 * Returns the message
-	 * 
+	 *
 	 * @return the message
 	 */
 	public String getMessage() {
@@ -78,7 +82,7 @@ public class ApplicationExceptionMessage {
 
 	/**
 	 * Sets the message
-	 * 
+	 *
 	 * @param message
 	 */
 	public void setMessage(String message) {
