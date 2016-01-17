@@ -9,9 +9,42 @@ function formatDate(date) {
     return [day, month, year].join('-');
 }
 
-var app = angular.module('bookings', []);
+var app = angular.module('bookings', ['ngRoute']);
 
-app.controller('BookingsController', function($scope, $http) {
+app.config(function($routeProvider){
+	$routeProvider.when('/', {
+		controller: 'BookingsController',
+		templateUrl: 'templates/rooms.html'
+     });
+}).service('userService', function () {
+    var user = null;
+
+    return {
+        getUser: function () {
+            return user;
+        },
+        setUser: function(value) {
+            user = value;
+        }
+    };
+}).controller('LoginController', function($scope, $http, userService) {
+	getUser();
+
+	function getUser() {
+		$http.get('../../../api/v1/public/user/profile').success(function(data) {
+			userService.setUser(data.userId);
+			$scope.user = userService.getUser();
+		}).error(function(data, status) {
+			if (status == 404) {
+				$http.post('../../../api/v1/protected/user/register').success(function(data) {
+					getUser();
+				}).error(function(data, status) {
+					alert('Unable to register user');
+				});
+			}
+		});
+	}
+}).controller('BookingsController', function($scope, $http, userService) {
 
 	initialSearchValidation();
 
@@ -51,7 +84,10 @@ app.controller('BookingsController', function($scope, $http) {
 	$scope.selectedRoomRating = null;
 	$scope.selectedRoomReviews = [];
 	$scope.isSearchEnabled = false;
-	$scope.review = {};
+	$scope.review = {
+			'comment': null,
+			'rating': 1
+	};
 
 	$scope.setSelectedRoom = function(index) {
 		updatePageProperties(index);
@@ -92,12 +128,14 @@ app.controller('BookingsController', function($scope, $http) {
 		if(confirm("Do you really want to submit a review?")) {
 			$http.post('../../../api/v1/protected/user/reviews', $scope.review).success(function(data) {
 				alert("The review was successfully added!");
+				loadRoomSpecificProperties($scope.selectedRoom.roomId);
+				$scope.review.rating = 1;
+				$scope.review.comment = null;
 			});
 		}
 	}
 
 	$scope.getAvailableRooms();
-	getUser();
 
 	function loadRooms() {
 		$http.get('../../../api/v1/public/rooms').success(function(data) {
@@ -106,25 +144,16 @@ app.controller('BookingsController', function($scope, $http) {
 		});
 	}
 
-	function getUser() {
-		$http.get('../../../api/v1/public/user/profile').success(function(data) {
-			$scope.user = data;
-		}).error(function(data, status) {
-			if (status == 404) {
-				$http.post('../../../api/v1/protected/user/register').success(function(data) {
-					getUser();
-				}).error(function(data, status) {
-					alert('Unable to register user');
-				});
-			}
-		});
-	}
-
 	function updatePageProperties(index) {
 		$scope.selectedRoom = $scope.rooms[index];
-		loadSelectedRoomTotalPrice($scope.selectedRoom.roomId);
-		loadSelectedRoomReviews($scope.selectedRoom.roomId);
-		loadCanWriteReview($scope.selectedRoom.roomId);
+		$scope.user = userService.getUser();
+		loadRoomSpecificProperties($scope.selectedRoom.roomId);
+	}
+
+	function loadRoomSpecificProperties(roomId) {
+		loadSelectedRoomTotalPrice(roomId);
+		loadSelectedRoomReviews(roomId);
+		loadCanWriteReview(roomId);
 	}
 
 	function loadSelectedRoomTotalPrice(roomId) {
@@ -176,4 +205,51 @@ app.controller('BookingsController', function($scope, $http) {
 	function updateSearchEnabled() {
 		$scope.isSearchEnabled = getStartDate() != null && getEndDate() != null;
 	}
-});
+}).directive('starRating', starRating);
+
+function starRating() {
+    return {
+      restrict: 'EA',
+      template:
+    	  '<ul class="star-rating" ng-class="{readonly: readonly}">' +
+    	  '  <li ng-repeat="star in stars" class="star" ng-class="{filled: star.filled}" ng-click="toggle($index)">' +
+    	  '    <i class="fa fa-star"></i>' +
+    	  '  </li>' +
+    	  '</ul>',
+      scope: {
+    	  ratingValue: '=ngModel',
+    	  max: '=?',
+    	  onRatingSelect: '&?',
+    	  readonly: '=?'
+      },
+      link: function(scope, element, attributes) {
+    	  if (scope.max == undefined) {
+    		  scope.max = 5;
+    	  }
+
+    	  function updateStars() {
+    		  scope.stars = [];
+    		  for (var i = 0; i < scope.max; i++) {
+    			  scope.stars.push({
+    				  filled: i < scope.ratingValue
+    			  });
+    		  }
+    	  };
+
+    	  scope.toggle = function(index) {
+    		  if (scope.readonly == undefined || scope.readonly === false) {
+    			  scope.ratingValue = index + 1;
+    			  scope.onRatingSelect({
+    				  rating: index + 1
+    			  });
+    		  }
+    	  };
+
+    	  scope.$watch('ratingValue', function(oldValue, newValue) {
+    		  if (newValue) {
+    			  updateStars();
+    		  }
+    	  });
+      }
+    };
+}
