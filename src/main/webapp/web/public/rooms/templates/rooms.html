@@ -22,7 +22,7 @@
 	<div class="col-md-9">
 		<div class="thumbnail">
 			<!-- Carousel -->
-			<div id="roomImagesCarousel" class="carousel slide" data-ride="carousel">
+			<div id="roomImagesCarousel" class="carousel slide" data-ride="carousel" ng-show="selectedRoom.imagesUrl.length > 0">
 				<ol class="carousel-indicators">
 					<li ng-repeat="image in selectedRoom.imagesUrl" data-target="#roomImagesCarousel" data-slide-to="{{$index}}" ng-class="($index === 0) ? 'active' : ''"></li>
 				</ol>
