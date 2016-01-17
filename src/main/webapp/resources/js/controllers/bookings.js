@@ -18,6 +18,9 @@ app.config(function($routeProvider){
      }).when('/my-bookings', {
 		controller: 'MyBookingsController',
 		templateUrl: '../../protected/user/templates/bookings.html'
+     }).when('/profile', {
+		controller: 'ProfileController',
+		templateUrl: '../../protected/user/templates/profile.html'
      });
 }).service('userService', function () {
     var user = null;
@@ -216,8 +219,44 @@ app.config(function($routeProvider){
 
 	$http.get('../../../api/v1/protected/user/bookings').success(function(data) {
 		$scope.data = data;
-	})
+	});
 	
+}).controller('ProfileController', function($scope, $http) {
+
+	const API_PROFILE_MODEL = '../../protected/user/resources/model-profile.json';
+	const API_PROFILE = '../../../api/v1/protected/user/profile';
+
+	$scope.readonly = true;
+
+	loadUserProfileModel();
+	loadUserProfileData();
+
+	$scope.setReadonly = function(value) {
+		$scope.readonly = value;
+	}
+
+	$scope.saveChanges = function() {
+		$http.put(API_PROFILE, $scope.data).success(function(data) {
+			$scope.setReadonly(true);
+		});
+	}
+
+	$scope.cancelChanges = function() {
+		$scope.setReadonly(true);
+		loadUserProfileData();
+	}
+
+	function loadUserProfileModel() {
+		$http.get(API_PROFILE_MODEL).success(function(data) {
+			$scope.model = data;
+		});
+	}
+
+	function loadUserProfileData() {
+		$http.get(API_PROFILE).success(function(data) {
+			$scope.data = data;
+		});
+	}
 }).directive('starRating', starRating);
 
 function starRating() {

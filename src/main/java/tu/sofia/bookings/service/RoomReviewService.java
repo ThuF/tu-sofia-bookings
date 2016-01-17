@@ -18,6 +18,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.cxf.common.util.StringUtils;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -157,10 +159,18 @@ public class RoomReviewService {
 	private void setUserProperties(RoomReview roomReview, HttpServletRequest request) {
 		User user = userDao.findById(request.getRemoteUser());
 		roomReview.setUserId(user.getUserId());
-		if ((user.getFirstName() != null) && (user.getLastName() != null)) {
-			roomReview.setUserName(user.getFirstName() + " " + user.getLastName());
-		} else {
+
+		boolean isFirstNameEmpty = StringUtils.isEmpty(user.getFirstName());
+		boolean isLastNameEmpty = StringUtils.isEmpty(user.getLastName());
+
+		if (isFirstNameEmpty && isLastNameEmpty) {
 			roomReview.setUserName(USER_NAME_ANONYMOUS);
+		} else if (isFirstNameEmpty && !isLastNameEmpty) {
+			roomReview.setUserName(user.getLastName());
+		} else if (!isFirstNameEmpty && isLastNameEmpty) {
+			roomReview.setUserName(user.getFirstName());
+		} else {
+			roomReview.setUserName(user.getFirstName() + " " + user.getLastName());
 		}
 	}
 
@@ -236,7 +246,7 @@ public class RoomReviewService {
 
 	/**
 	 * Returns a list of all reviews filtered by room Id
-	 * 
+	 *
 	 * @param roomId
 	 * @return a list of all reviews filtered by room Id
 	 */

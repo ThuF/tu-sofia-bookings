@@ -7,7 +7,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="selected-{{entry._selected_}}" ng-repeat="entry in data" ng-click="showInfoForEntry(entry)">
+			<tr class="selected-{{entry._selected_}}" ng-repeat="entry in data">
 				<td ng-repeat='field in model' ng-if="!field.optional">{{entry[field.id]}}</td>
 			</tr>
 		</tbody>

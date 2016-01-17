@@ -1,0 +1,16 @@
+[
+	{
+		"id": "userId",
+		"name": "User Id",
+		"readonly": true
+	}, {
+		"id": "firstName",
+		"name": "First Name"
+	}, {
+		"id": "lastName",
+		"name": "Last Name"
+	}, {
+		"id": "email",
+		"name": "E-mail"
+	}
+]
