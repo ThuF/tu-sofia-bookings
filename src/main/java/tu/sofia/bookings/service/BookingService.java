@@ -1,5 +1,6 @@
 package tu.sofia.bookings.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -144,7 +145,7 @@ public class BookingService {
 		Response response = null;
 		Booking persistedBooking = bookingDao.findById(id);
 		if (persistedBooking != null) {
-			persistedBooking.setPaymentStatus(paymentStatus);
+			updatePaymentProperties(paymentStatus, persistedBooking);
 			bookingDao.update(persistedBooking);
 			response = Response.status(Status.NO_CONTENT).build();
 		} else {
@@ -178,5 +179,14 @@ public class BookingService {
 
 		unitOfWorkUtils.end();
 		return response;
+	}
+
+	private void updatePaymentProperties(PaymentStatus paymentStatus, Booking persistedBooking) {
+		persistedBooking.setPaymentStatus(paymentStatus);
+		if (!paymentStatus.equals(PaymentStatus.UNPAID)) {
+			persistedBooking.setPaymentDate(new Date());
+		} else {
+			persistedBooking.setPaymentDate(null);
+		}
 	}
 }

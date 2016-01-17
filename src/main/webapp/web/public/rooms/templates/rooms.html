@@ -54,7 +54,7 @@
 				<p>{{selectedRoom.description}}</p>
 			</div>
 			<div class="ratings">
-				<p class="pull-right">3 reviews</p>
+				<p class="pull-right">{{selectedRoomReviews.length ? selectedRoomReviews.length : 0}} {{selectedRoomReviews.length == 1 ? 'review' : 'reviews'}}</p>
 				<p>
 					<span ng-repeat="star in selectedRoomRating track by $index" ng-class="star === true ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'"></span>
 					{{selectedRoom.rating}} stars

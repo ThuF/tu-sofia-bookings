@@ -1,0 +1,43 @@
+[
+	{
+		"id": "bookingStatus",
+		"name": "Status",
+		"editableBookingStatus": true,
+		"dropdown": [{
+			"label": "Processing",
+			"value": "PROCESSING"
+		}, {
+			"label": "Confirmed",
+			"value": "CONFIRMED"
+		}, {
+			"label": "Rejected",
+			"value": "REJECTED"
+		}]
+	}, {
+		"id": "startDate",
+		"name": "Start Date"
+	}, {
+		"id": "endDate",
+		"name": "End Date"
+	}, {
+		"id": "paymentStatus",
+		"name": "Payment",
+		"editablePaymentStatus": true,
+		"dropdown": [{
+			"label": "Unpaid",
+			"value": "UNPAID"
+		}, {
+			"label": "Partially Paid",
+			"value": "PARTIALLY_PAID"
+		}, {
+			"label": "Fully Paid",
+			"value": "FULLY_PAID"
+		}]
+	}, {
+		"id": "paymentAmount",
+		"name": "Amount"
+	}, {
+		"id": "paymentDate",
+		"name": "Payment Date"
+	}
+]

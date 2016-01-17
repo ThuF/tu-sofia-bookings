@@ -2,12 +2,12 @@ package tu.sofia.bookings.entity.dto;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
+import tu.sofia.bookings.common.DateUtils;
 import tu.sofia.bookings.entity.RoomReview;
 
 /**
- * Data Transfer Object for the RoomReview entity
+ * Data Transfer Object for the {@link RoomReview} entity
  */
 public class RoomReviewDto implements Serializable {
 
@@ -33,7 +33,7 @@ public class RoomReviewDto implements Serializable {
 		this.userName = roomReview.getUserName();
 		this.rating = roomReview.getRating();
 		this.comment = roomReview.getComment();
-		this.daysBefore = TimeUnit.DAYS.convert((new Date().getTime() - roomReview.getDate().getTime()), TimeUnit.MILLISECONDS);
+		this.daysBefore = DateUtils.getDaysBetween(new Date(), roomReview.getDate());
 	}
 
 	/**

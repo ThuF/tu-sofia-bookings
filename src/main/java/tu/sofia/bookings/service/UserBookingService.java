@@ -1,6 +1,7 @@
 package tu.sofia.bookings.service;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import tu.sofia.bookings.dao.BookingDao;
 import tu.sofia.bookings.dao.UserDao;
 import tu.sofia.bookings.entity.Booking;
 import tu.sofia.bookings.entity.User;
+import tu.sofia.bookings.entity.dto.BookingDto;
 
 /**
  * Service for creating bookings
@@ -62,7 +64,7 @@ public class UserBookingService {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Booking getBooking(@PathParam("id") Long id, @Context HttpServletRequest request) {
+	public BookingDto getBooking(@PathParam("id") Long id, @Context HttpServletRequest request) {
 		unitOfWorkUtils.begin();
 
 		Booking booking = null;
@@ -82,7 +84,7 @@ public class UserBookingService {
 		}
 
 		unitOfWorkUtils.end();
-		return booking;
+		return new BookingDto(booking);
 	}
 
 	/**
@@ -93,15 +95,17 @@ public class UserBookingService {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Booking> getBookings(@Context HttpServletRequest request) {
+	public List<BookingDto> getBookings(@Context HttpServletRequest request) {
 		unitOfWorkUtils.begin();
 
-		List<Booking> bookings = null;
+		List<BookingDto> bookings = new ArrayList<BookingDto>();
 		String userId = request.getRemoteUser();
 		if (userId != null) {
 			User user = userDao.findById(userId);
 			if (user != null) {
-				bookings = bookingDao.findAllByUser(user);
+				for (Booking next : bookingDao.findAllByUser(user)) {
+					bookings.add(new BookingDto(next));
+				}
 			} else {
 				throw new BadRequestException(MessageFormat.format(VALIDATION_MESSAGE_THERE_IS_NO_USER_REGISTERED_WITH_USER_ID, userId));
 			}

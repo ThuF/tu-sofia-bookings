@@ -15,6 +15,9 @@ app.config(function($routeProvider){
 	$routeProvider.when('/', {
 		controller: 'BookingsController',
 		templateUrl: 'templates/rooms.html'
+     }).when('/my-bookings', {
+		controller: 'MyBookingsController',
+		templateUrl: '../../protected/user/templates/bookings.html'
      });
 }).service('userService', function () {
     var user = null;
@@ -205,6 +208,16 @@ app.config(function($routeProvider){
 	function updateSearchEnabled() {
 		$scope.isSearchEnabled = getStartDate() != null && getEndDate() != null;
 	}
+}).controller('MyBookingsController', function($scope, $http) {
+
+	$http.get('../../protected/user/resources/model-booking.json').success(function(data) {
+		$scope.model = data;
+	});
+
+	$http.get('../../../api/v1/protected/user/bookings').success(function(data) {
+		$scope.data = data;
+	})
+	
 }).directive('starRating', starRating);
 
 function starRating() {

@@ -62,9 +62,10 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="LoginController">
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#/">Rooms</a></li>
                     <li><a href="../../protected/user" ng-hide="user">Login</a></li>
-                    <li><a href="#" ng-show="user">Bookings</a></li>
-                    <li><a href="#" ng-show="user">Profile</a></li>
+                    <li><a href="#/my-bookings" ng-show="user">My Bookings</a></li>
+                    <li><a href="#/profile" ng-show="user">Profile</a></li>
                 </ul>
             </div>
         </div>
