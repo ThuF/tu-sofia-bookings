@@ -13,8 +13,5 @@
 		<class>tu.sofia.bookings.entity.Booking</class>
 
 		<shared-cache-mode>NONE</shared-cache-mode>
-		<properties>
-			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
-		</properties>
 	</persistence-unit>
 </persistence>
