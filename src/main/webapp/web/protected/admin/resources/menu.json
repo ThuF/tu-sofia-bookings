@@ -1,7 +1,12 @@
-[{
-    "name": "Bookings",
-    "link": "#/bookings"
-},{
-    "name": "Rooms",
-    "link": "#/rooms"
-}]
+[
+	{
+    	"name": "Bookings",
+    	"link": "#/bookings"
+	}, {
+    	"name": "Rooms",
+    	"link": "#/rooms"
+	}, {
+    	"name": "Users",
+    	"link": "#/users"
+	}
+]

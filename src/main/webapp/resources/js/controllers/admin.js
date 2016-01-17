@@ -7,6 +7,9 @@ bookignsApp.config(function($routeProvider){
 	}).when('/rooms', {
 		controller: 'RoomsAdminController',
 		templateUrl: 'templates/rooms.html'
+     }).when('/users', {
+		controller: 'UsersAdminController',
+		templateUrl: 'templates/users.html'
      }).otherwise({
          redirectTo: '/bookings'
      });
@@ -323,4 +326,13 @@ bookignsApp.config(function($routeProvider){
 			$scope.errorMessage = response.message;
 		});
 	}
+}).controller('UsersAdminController', function($scope, $http){
+
+	$http.get('resources/model-user.json').success(function(data) {
+		$scope.model = data;
+	});
+
+	$http.get('../../../api/v1/protected/admin/users').success(function(data) {
+		$scope.data = data;
+	});
 });

@@ -22,13 +22,6 @@
 	<br>
 	<br>
 	<div ng-repeat="field in model">
-		<div ng-show="operation == 'show'">
-			<label>{{field.name}}</label>
-			<input type="text" class="form-control" ng-model="selectedEntry[field.id]" ng-hide="field.dropdown || field.textarea" readonly>
-			<select class="form-control" ng-model="selectedEntry[field.id]" ng-options="option.value as option.label for option in field.dropdown" ng-show="field.dropdown" disabled></select>
-			<textarea class="form-control" ng-model="selectedEntry[field.id]" ng-show="field.textarea" rows="5" readonly></textarea>
-			<br>
-		</div>
 		<div ng-show="operation == 'new'">
 			<label>{{field.name}}</label>
 			<input type="text" class="form-control" ng-show="field.readOnly" value="Auto Generated" readonly>
