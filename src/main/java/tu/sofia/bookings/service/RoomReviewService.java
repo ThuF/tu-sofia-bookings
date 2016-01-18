@@ -130,8 +130,8 @@ public class RoomReviewService {
 	 *
 	 * @param roomReview
 	 * @param request
-	 * @return HTTP 200 OK if the room review was successfully added or
-	 *         HTTP 400 if something went wrong
+	 * @return HTTP 201 CREATED if the room review was successfully added or
+	 *         HTTP 400 BAD REQUEST if something went wrong
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -180,7 +180,7 @@ public class RoomReviewService {
 	 * @param roomId
 	 * @param userId
 	 * @param roomReview
-	 * @return HTTP 201 NO CONTENT if the update was successful or
+	 * @return HTTP 204 NO CONTENT if the update was successful or
 	 *         HTTP 404 NOT FOUND if there was no such room review
 	 */
 	@PUT
@@ -213,8 +213,8 @@ public class RoomReviewService {
 	 *
 	 * @param roomId
 	 * @param userId
-	 * @return HTTP 201 NO CONTENT if the deletion was successful or
-	 *         HTTP 404 if there was no such room review
+	 * @return HTTP 204 NO CONTENT if the deletion was successful or
+	 *         HTTP 404 BAD REQUEST if there was no such room review
 	 */
 	@DELETE
 	@Path("/room/{roomId}/user/{userId}")

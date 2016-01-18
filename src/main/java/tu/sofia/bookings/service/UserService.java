@@ -104,8 +104,8 @@ public class UserService {
 	 * Adds new user
 	 *
 	 * @param user
-	 * @return HTTP 200 OK if the user was successfully added or
-	 *         HTTP 400 if something went wrong
+	 * @return HTTP 201 CREATED if the user was successfully added or
+	 *         HTTP 400 BAD REQUEST if something went wrong
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -129,7 +129,7 @@ public class UserService {
 	 *
 	 * @param id
 	 * @param user
-	 * @return HTTP 201 NO CONTENT if the update was successful or
+	 * @return HTTP 204 NO CONTENT if the update was successful or
 	 *         HTTP 404 NOT FOUND if there was no such user
 	 */
 	@PUT
@@ -162,8 +162,8 @@ public class UserService {
 	 * Deletes specific user
 	 *
 	 * @param id
-	 * @return HTTP 201 NO CONTENT if the deletion was successful or
-	 *         HTTP 404 if there was no such user
+	 * @return HTTP 204 NO CONTENT if the deletion was successful or
+	 *         HTTP 404 NOT FOUND if there was no such user
 	 */
 	@DELETE
 	@Path("/{id}")

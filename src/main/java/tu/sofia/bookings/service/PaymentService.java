@@ -126,8 +126,8 @@ public class PaymentService {
 	 * Adds new room price
 	 *
 	 * @param roomPrice
-	 * @return HTTP 200 OK if the room price was successfully added or
-	 *         HTTP 400 if something went wrong
+	 * @return HTTP 201 CREATED if the room price was successfully added or
+	 *         HTTP 400 BAD REQUEST if something went wrong
 	 */
 	@POST
 	@Path("/rooms")
@@ -152,7 +152,7 @@ public class PaymentService {
 	 *
 	 * @param id
 	 * @param price
-	 * @return HTTP 201 NO CONTENT if the update was successful or
+	 * @return HTTP 204 NO CONTENT if the update was successful or
 	 *         HTTP 404 NOT FOUND if there was no such room price
 	 */
 	@PUT
@@ -180,8 +180,8 @@ public class PaymentService {
 	 * Deletes specific room
 	 *
 	 * @param id
-	 * @return HTTP 201 NO CONTENT if the deletion was successful or
-	 *         HTTP 404 if there was no such room price
+	 * @return HTTP 204 NO CONTENT if the deletion was successful or
+	 *         HTTP 404 NOT FOUND if there was no such room price
 	 */
 	@DELETE
 	@Path("/rooms/{id}")

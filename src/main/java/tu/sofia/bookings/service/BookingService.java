@@ -105,7 +105,7 @@ public class BookingService {
 	 *
 	 * @param id
 	 * @param bookingStatus
-	 * @return HTTP 201 NO CONTENT if the update was successful or
+	 * @return HTTP 204 NO CONTENT if the update was successful or
 	 *         HTTP 404 NOT FOUND if there was no such booking
 	 */
 	@PUT
@@ -133,7 +133,7 @@ public class BookingService {
 	 *
 	 * @param id
 	 * @param paymentStatus
-	 * @return HTTP 201 NO CONTENT if the update was successful or
+	 * @return HTTP 204 NO CONTENT if the update was successful or
 	 *         HTTP 404 NOT FOUND if there was no such booking
 	 */
 	@PUT
@@ -160,8 +160,8 @@ public class BookingService {
 	 * Deletes specific booking
 	 *
 	 * @param id
-	 * @return HTTP 201 NO CONTENT if the deletion was successful or
-	 *         HTTP 404 if there was no such booking
+	 * @return HTTP 204 NO CONTENT if the deletion was successful or
+	 *         HTTP 404 NOT FOUND if there was no such booking
 	 */
 	@DELETE
 	@Path("/{id}")

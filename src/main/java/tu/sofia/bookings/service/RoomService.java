@@ -140,8 +140,8 @@ public class RoomService {
 	 * Adds new room
 	 *
 	 * @param room
-	 * @return HTTP 200 OK if the room was successfully added or
-	 *         HTTP 400 if something went wrong
+	 * @return HTTP 201 CREATED if the room was successfully added or
+	 *         HTTP 400 BAD REQUEST if something went wrong
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -165,7 +165,7 @@ public class RoomService {
 	 *
 	 * @param id
 	 * @param room
-	 * @return HTTP 201 NO CONTENT if the update was successful or
+	 * @return HTTP 204 NO CONTENT if the update was successful or
 	 *         HTTP 404 NOT FOUND if there was no such room
 	 */
 	@PUT
