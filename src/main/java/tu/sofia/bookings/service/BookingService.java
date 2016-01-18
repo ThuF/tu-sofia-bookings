@@ -165,7 +165,7 @@ public class BookingService {
 	 */
 	@DELETE
 	@Path("/{id}")
-	public Response deleteUser(@PathParam("id") Long id) {
+	public Response deleteBooking(@PathParam("id") Long id) {
 		unitOfWorkUtils.begin();
 
 		Response response = null;
