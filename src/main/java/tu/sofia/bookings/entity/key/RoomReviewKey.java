@@ -14,6 +14,13 @@ public class RoomReviewKey implements Serializable {
 	private String userId;
 
 	/**
+	 * Default constructor
+	 */
+	public RoomReviewKey() {
+
+	}
+
+	/**
 	 * Constructor
 	 *
 	 * @param roomId
